@@ -12,15 +12,8 @@ import pygame
 from src.colors import Game_color as color
 
 
-def verticalButtonsDisplay(
-        screen :pygame.Surface, 
-        buttons :list, 
-        start_position :dict, 
-        box_dim :dict, 
-        mouse_pos :list, 
-        font :pygame.font
-    ) -> str:
-
+def verticalButtonsDisplay(screen :pygame.Surface, buttons :list, start_position :dict, 
+                            box_dim :dict, mouse_pos :list, font :pygame.font) -> str:
     button_clicked :str
     button_clicked = ""
 
