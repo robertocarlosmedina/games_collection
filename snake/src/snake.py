@@ -29,6 +29,7 @@ class Snake:
     dead_counter :int # to control the dead_delay
     snake_step : int # the number of pixel that takes to make a step
     start_position :dict # initial position of the snake
+    snake_moves :int # Number of moves maked by the snake
 
     def __init__(self, screen :pygame.Surface, start_position : dict, table_size_position :dict, snake_step :int) -> None:
         self.screen = screen
@@ -42,6 +43,7 @@ class Snake:
         self.snake_self_collision = False 
         self.dead_delay = 3 
         self.dead_counter = 0
+        self.snake_moves = 0
 
         self.start_snake_controlers_and_parts()
 
@@ -115,6 +117,9 @@ class Snake:
     def change_snake_speed(self, new_speed :int) -> None:
         self.snake_speed = new_speed
 
+    def get_snake_moves(self) -> int:
+        return self.snake_moves
+
     # To control the snake move direction
     def snake_move_direction_controlers(self) -> None:
         there_is_changes = False
@@ -127,6 +132,7 @@ class Snake:
                     self.current_orientation = values["orientation"]
                     self.current_move_direction = values["move_to"]
                     there_is_changes = True
+                    self.snake_moves += 1
             else:
                 values["state"] = False
 
@@ -188,7 +194,7 @@ class Snake:
             part.update_position(position)
             last_head_position = part_position
 
-    def get_snake_head_rect(self) -> dict:
+    def get_snake_head_rect(self) -> pygame.Rect:
         return self.snake_parts[0].get_part_rect()
     
     def snake_self_collision_controler(self) -> None:

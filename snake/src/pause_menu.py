@@ -14,7 +14,7 @@ from src.font import Game_fonts as fonts
 from src.colors import Game_color as color
 from src.buttons import verticalButtonsDisplay
 
-class Game_menu:
+class Game_Pause_Menu:
 
     screen :pygame.Surface
     screen_size :tuple
@@ -30,59 +30,52 @@ class Game_menu:
         self.screen_size = screen_size
         self.button_clicked = ""
         self.game_buttons = {
-            "new_game": "New Game", 
-            "game_loop":"Continue", 
-            "game_tutorial":"Tutorial", 
+            "game_loop":"Continue",
+            "new_game": "New Game",
+            "game_menu": "Main Menu",
             "game_quit":"Quit"
         }
-        self.algorithms_buttons = {
-            "hamiltonian_choice":"Hamiltonian cycle", 
-            "ai_game_play":"Simple AI"
-        }
+
         self.menu_tittles = {
             "game_tittle": "Snake Game",
-            "game_menu_tittle": "Game Menu",
+            "game_menu_tittle": "Pause Menu",
             "self_play_menu": "Watch Snake Play"
-        }
-        self.menus_start_positions = {
-            "game_menu":{
-                "x":80,
-                "y":190
-            },
-            "self_play_menu":{
-                "x":400,
-                "y":190
-            }
         }
         self.buttons_size = {
             "x":220,
             "y":50
         }
+        self.menus_start_positions = {
+            "game_menu":{
+                "x": int(self.screen_size[0]/2 - self.buttons_size["x"]/2),
+                "y":190
+            }
+        }
+        
     
     def draw_styled_lines(self) -> None:
         pygame.draw.line(
             self.screen, 
             color.green.value,
-            (self.screen_size[0]/2 , 140), 
-            (self.screen_size[0]/2, 430), 
+            (self.screen_size[0]/2 - 190, 100), 
+            (self.screen_size[0]/2 + 190, 100), 
             3
         )
         pygame.draw.line(
             self.screen, 
             color.grey.value,
-            (self.screen_size[0]/2 - 7 , 150), 
-            (self.screen_size[0]/2 - 7, 420), 
-            
+            (self.screen_size[0]/2 - 180, 95), 
+            (self.screen_size[0]/2 + 180, 95),  
         )
         pygame.draw.line(
             self.screen, 
             color.grey.value,
-            (self.screen_size[0]/2 + 7, 150), 
-            (self.screen_size[0]/2 + 7, 420), 
+            (self.screen_size[0]/2 - 180, 105), 
+            (self.screen_size[0]/2 + 180, 105), 
             1
         )
     
-    def game_play_buttons(self) -> None:
+    def pause_menu_buttons(self) -> None:
 
         font_size = pygame.font.Font.size(fonts.montserrat_subbig_font.value, self.menu_tittles["game_menu_tittle"])
         line = fonts.montserrat_subbig_font.value.render(self.menu_tittles["game_menu_tittle"], True, color.green_1.value)
@@ -104,29 +97,6 @@ class Game_menu:
             font = fonts.montserrat_small_font.value,
             button_clicked = self.button_clicked
         )
-    
-    def snake_self_play_buttons(self) -> None:
-
-        font_size = pygame.font.Font.size(fonts.montserrat_subbig_font.value, self.menu_tittles["self_play_menu"])
-        line = fonts.montserrat_subbig_font.value.render(self.menu_tittles["self_play_menu"], True, color.green_1.value)
-        self.screen.blit(
-            line, 
-            (self.menus_start_positions["self_play_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
-                self.menus_start_positions["self_play_menu"]["y"]-font_size[1]*2)
-        )
-
-        self.button_clicked = verticalButtonsDisplay(
-            screen = self.screen,
-            buttons = self.algorithms_buttons.values(),
-            start_position = {
-                "x":self.menus_start_positions["self_play_menu"]["x"],
-                "y":self.menus_start_positions["self_play_menu"]["y"]
-            },
-            box_dim = self.buttons_size,
-            mouse_pos = self.mouse_pos,
-            font = fonts.montserrat_small_font.value,
-            button_clicked = self.button_clicked
-        )
 
     def run_link(self, game_events :pygame.event) -> str:
         del game_events
@@ -138,15 +108,12 @@ class Game_menu:
 
         self.draw_styled_lines()
 
-        self.game_play_buttons()
+        self.pause_menu_buttons()
         
-        self.snake_self_play_buttons()
-
         if (self.button_clicked != "" ):
             for key,value in self.game_buttons.items():
                 if(self.button_clicked == value):
                     self.button_clicked = ""
                     return key
         
-        return "game_menu"
-        
+        return "game_pause_menu"
