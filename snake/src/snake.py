@@ -148,8 +148,6 @@ class Snake:
                     self.current_orientation = values["orientation"]
                     self.current_move_direction = values["move_to"]
 
-        # for values in self.snake_move_direction.values():
-            # print(values.values())
 
     def snake_moving_up(self) -> None:
         if(self.snake_parts[0].part_position["y"] > self.table_size_position["y_position"]+14):
