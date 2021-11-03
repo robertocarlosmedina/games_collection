@@ -14,7 +14,7 @@ from src.font import Game_fonts as fonts
 from src.colors import Game_color as color
 from src.buttons import verticalButtonsDisplay
 from src.auxiliar_functions import draw_header_styled_lines, \
-    display_game_snake_info, read_from_file
+    display_game_snake_info, read_from_file, get_screen_text
 
 class Game_won:
 
@@ -39,11 +39,6 @@ class Game_won:
             "game_quit":"Quit"
         }
 
-        self.menu_tittles = {
-            "game_tittle": "Snake Game",
-            "game_menu_tittle": "Game Won !!",
-            "self_play_menu": "Watch Snake Play"
-        }
         self.buttons_size = {
             "x":220,
             "y":50
@@ -56,8 +51,8 @@ class Game_won:
         }
     
     def pause_menu_buttons(self) -> None:
-        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, self.menu_tittles["game_menu_tittle"])
-        line = fonts.montserrat_size_22.value.render(self.menu_tittles["game_menu_tittle"], True, color.green_1.value)
+        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_won_text"))
+        line = fonts.montserrat_size_22.value.render(get_screen_text("game_won_text"), True, color.green_1.value)
         self.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
@@ -73,7 +68,7 @@ class Game_won:
             },
             box_dim = self.buttons_size,
             mouse_pos = self.mouse_pos,
-            font = fonts.montserrat_small_font.value,
+            font = fonts.montserrat_size_16.value,
             button_clicked = self.button_clicked
         )
 
@@ -81,17 +76,17 @@ class Game_won:
         del game_events
         self.mouse_pos = pygame.mouse.get_pos()
 
-        font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, self.menu_tittles["game_tittle"])
-        line = fonts.montserrat_size_30.value.render(self.menu_tittles["game_tittle"], True, color.white.value)
+        font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, get_screen_text("game_tittle"))
+        line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), 25))
 
         draw_header_styled_lines(self.screen, self.screen_size)
 
-        display_game_snake_info(screen = self.screen, info_name = "Foods", value = self.game_data[0], 
-            position = {"x":self.menus_start_positions["game_menu"]["x"] + 250, "y":225})
+        display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_movements"), value = self.game_data[1], 
+            position = {"x":20, "y":190})
 
-        display_game_snake_info(screen = self.screen, info_name = "Movements", value = self.game_data[1], 
-            position = {"x":self.menus_start_positions["game_menu"]["x"] - 130, "y":225})
+        display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_foods"), value = self.game_data[0], 
+            position = {"x":580, "y":190})
 
         self.pause_menu_buttons()
         

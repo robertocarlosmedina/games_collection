@@ -12,6 +12,7 @@ import pygame
 from src.font import Game_fonts as fonts
 from src.colors import Game_color as color
 from src.buttons import horizontalButtonDisplay
+from src.auxiliar_functions import get_screen_text
 
 class Game_quit:
 
@@ -25,7 +26,6 @@ class Game_quit:
     def __init__(self, screen, screen_size) -> None:
         self.screen = screen
         self.screen_size = screen_size
-        self.quit_text = "Do you really want to finish the game?"
         self.quit_confirmation_buttons = ["Yes", "No"]
         self.button_clicked = ""
         self.box_dim = {
@@ -43,8 +43,8 @@ class Game_quit:
         del game_event
         self.mouse_position = pygame.mouse.get_pos()
 
-        font_size = pygame.font.Font.size(fonts.montserrat_normal_font.value, self.quit_text)
-        line = fonts.montserrat_normal_font.value.render(self.quit_text, True, color.white.value)
+        font_size = pygame.font.Font.size(fonts.montserrat_size_18.value, get_screen_text("game_quit_text"))
+        line = fonts.montserrat_size_18.value.render(get_screen_text("game_quit_text"), True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), (self.screen_size[1]/2-(font_size[1]/2) - 60)))
 
         self.button_clicked = horizontalButtonDisplay(
@@ -56,7 +56,7 @@ class Game_quit:
             },
             box_dim = self.box_dim,
             mouse_pos = self.mouse_position,
-            font = fonts.montserrat_small_font.value,
+            font = fonts.montserrat_size_16.value,
             button_clicked = self.button_clicked
         )
         

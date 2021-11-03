@@ -18,7 +18,9 @@ screen_texts = {
     "self_play_menu_text": "Watch Snake Play",
     "game_won_text": "You Won !!",
     "game_lost_text": "You Lost !!",
-    "game_pause_menu_text": "Do you really want to finish the game?",
+    "game_quit_text": "Do you really want to finish the game?",
+    "data_movements": "Movements",
+    "data_foods": "Foods"
 }
 
 
@@ -76,8 +78,8 @@ def display_game_snake_info(screen :pygame.Surface, info_name :str, value :int, 
         pygame.Rect(1,1, 98,98),
         1
     )
-    font_size = pygame.font.Font.size(fonts.montserrat_small_font.value, f"{value}")
-    line = fonts.montserrat_small_font.value.render(f"{value}", True, color.white.value)
+    font_size = pygame.font.Font.size(fonts.montserrat_size_16.value, f"{value}")
+    line = fonts.montserrat_size_16.value.render(f"{value}", True, color.white.value)
     surface.blit(line, (50-font_size[0] / 2, 30))
     font_size = pygame.font.Font.size(fonts.montserrat_super_small_font.value, f"{info_name}")
     line = fonts.montserrat_super_small_font.value.render(f"{info_name}", True, color.white.value)

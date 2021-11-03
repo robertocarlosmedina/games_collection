@@ -148,8 +148,6 @@ class Snake:
                     self.current_orientation = values["orientation"]
                     self.current_move_direction = values["move_to"]
 
-                
-
         # for values in self.snake_move_direction.values():
             # print(values.values())
 

@@ -15,7 +15,8 @@ from src.font import Game_fonts as fonts
 from src.colors import Game_color as color
 from src.snake import Snake
 from src.food import Food
-from src.auxiliar_functions import display_game_snake_info, write_from_file
+from src.auxiliar_functions import display_game_snake_info, \
+            get_screen_text, write_from_file
 
 class Game_loop:
     
@@ -88,10 +89,10 @@ class Game_loop:
         self.food.draw_food()
 
         self.snake_is_alive = self.snake.draw_snake(self.pressed_keys)
-        display_game_snake_info(screen = self.screen, info_name = "Movements", value = self.snake.get_snake_moves(), 
+        display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_movements"), value = self.snake.get_snake_moves(), 
             position = {"x":20, "y":190})
 
-        display_game_snake_info(screen = self.screen, info_name = "Foods", value = self.collected_foods, 
+        display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_foods"), value = self.collected_foods, 
             position = {"x":580, "y":190})
     
     def game_events_handler(self, snake_head_rect :pygame.Rect, food_rect :pygame.Rect) -> None:

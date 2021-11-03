@@ -10,7 +10,9 @@ __path__ = "https://github.com/robertocarlosmedina/AI_games/tree/main/snake"
 """
 """
 import pygame
+from pygame.scrap import get
 from src.colors import Game_color as color
+from src.auxiliar_functions import get_screen_text
 
 # class that control the initial painel 
 class Game_start:
@@ -23,20 +25,15 @@ class Game_start:
         self.screen = screen
         self.screen_size = screen_size
         self.delay = self.highCircle  = self.count = 0
-        self.menu_tittles = {
-            "game_tittle": "Snake Game",
-            "game_menu_tittle": "Game Menu",
-            "self_play_menu": "Watch Snake Play"
-        }
     
     def draw_screen_text(self) -> None:
         # drawing tittle
-        size = pygame.font.Font.size(self.font, self.menu_tittles["game_tittle"])
-        line = self.font.render(self.menu_tittles["game_tittle"], True, color.green.value)
+        size = pygame.font.Font.size(self.font, get_screen_text("game_tittle"))
+        line = self.font.render(get_screen_text("game_tittle"), True, color.green.value)
         self.screen.blit(line, (self.screen_size[0]/2-size[0]/2, (self.screen_size[1]/2-size[1]/2)-40))
         # drawing sub tittle
-        size = pygame.font.Font.size(self.font1, self.menu_tittles["game_tittle"])
-        line = self.font1.render(self.menu_tittles["game_tittle"], True, color.white.value)
+        size = pygame.font.Font.size(self.font1, get_screen_text("game_subtittle"))
+        line = self.font1.render(get_screen_text("game_subtittle"), True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-size[0]/2, (self.screen_size[1]/2-size[1]/2)-10))
 
         # decrement the font1 size

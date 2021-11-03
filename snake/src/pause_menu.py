@@ -55,8 +55,8 @@ class Game_Pause_Menu:
     
     def pause_menu_buttons(self) -> None:
 
-        font_size = pygame.font.Font.size(fonts.montserrat_subbig_font.value, self.menu_tittles["game_menu_tittle"])
-        line = fonts.montserrat_subbig_font.value.render(self.menu_tittles["game_menu_tittle"], True, color.green_1.value)
+        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, self.menu_tittles["game_menu_tittle"])
+        line = fonts.montserrat_size_22.value.render(self.menu_tittles["game_menu_tittle"], True, color.green_1.value)
         self.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
@@ -72,7 +72,7 @@ class Game_Pause_Menu:
             },
             box_dim = self.buttons_size,
             mouse_pos = self.mouse_pos,
-            font = fonts.montserrat_small_font.value,
+            font = fonts.montserrat_size_16.value,
             button_clicked = self.button_clicked
         )
 
@@ -80,8 +80,8 @@ class Game_Pause_Menu:
         del game_events
         self.mouse_pos = pygame.mouse.get_pos()
 
-        font_size = pygame.font.Font.size(fonts.montserrat_big_font.value, self.menu_tittles["game_tittle"])
-        line = fonts.montserrat_big_font.value.render(self.menu_tittles["game_tittle"], True, color.white.value)
+        font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, self.menu_tittles["game_tittle"])
+        line = fonts.montserrat_size_30.value.render(self.menu_tittles["game_tittle"], True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), 25))
 
         draw_header_styled_lines(self.screen, self.screen_size)
