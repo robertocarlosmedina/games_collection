@@ -11,12 +11,14 @@ __status__ = "Production"
 from enum import Enum
 
 class Game_color(Enum):
-    blue = (0, 0, 255)
+    blue = (0, 55, 255)
     blue_1 = (0, 151, 226)
+    blue_2 = (0, 243, 97)
     white = (255, 255, 255)
     white1 = (155, 155, 155)
     yellow = (255, 255, 0)
     green = (0, 255, 0)
+    darck_green = (9, 129, 0)
     green_1 = (0, 208, 28)
     green_2 = (0, 255, 34)
     green_3 = (137, 255, 0)
@@ -24,6 +26,7 @@ class Game_color(Enum):
     grey = (105, 105, 105)
     grey1 = (35, 35, 35)
     red = (255, 0, 0)
+    red_1 = (255, 132, 132)
 
 
 # this is to return the RGB value of the color

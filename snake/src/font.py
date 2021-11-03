@@ -4,6 +4,7 @@ import pygame
 class Game_fonts(Enum):
     pygame.init()
     
+    montserrat_super_big_font = pygame.font.Font("assets/font/montserrat-font/MontserratMedium-nRxlJ.ttf", 40)
     montserrat_big_font = pygame.font.Font("assets/font/montserrat-font/MontserratMedium-nRxlJ.ttf", 30)
     montserrat_subbig_font = pygame.font.Font("assets/font/montserrat-font/MontserratMedium-nRxlJ.ttf", 22)
     montserrat_normal_font = pygame.font.Font("assets/font/montserrat-font/MontserratMedium-nRxlJ.ttf", 18)

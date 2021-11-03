@@ -88,21 +88,24 @@ class Snake:
                 position={
                     "x": x_position,
                     "y": y_position,
-                }
+                },
+                part_color=color.blue.value
             ),
             Snake_part(
                 screen=self.screen, 
                 position={
                     "x": x_position - 14,
                     "y": y_position,
-                }
+                },
+                part_color=color.blue_1.value
             )
             ,
             Snake_part(screen=self.screen, 
                 position={
                 "x": x_position - 28,
                 "y": y_position,
-                }
+                },
+                part_color=color.blue_2.value
             )
             ,
             Snake_part(screen=self.screen, 
@@ -184,7 +187,7 @@ class Snake:
             self.speed_couter += 1
 
     def check_game_end(self) -> bool:
-        return False
+        return len(self.snake_parts)
 
     def update_parts_position(self, last_head_position :dict) -> None:
         for part in self.snake_parts[1:len(self.snake_parts)]:

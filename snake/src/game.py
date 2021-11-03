@@ -78,7 +78,7 @@ class Game_loop:
         # game table draw
         pygame.draw.rect(
             self.screen, 
-            color.blue.value, 
+            color.white.value, 
             pygame.Rect(self.table_size_position["x_position"]-2, 
             self.table_size_position["y_position"]-2, 
             self.table_size_position["widht"]+5,self.table_size_position["height"]+6 ), 
@@ -117,12 +117,15 @@ class Game_loop:
         snake_head_rect = self.snake.get_snake_head_rect()
         self.game_events_handler(food_rect, snake_head_rect)
 
-        if(not self.snake_is_alive and not self.game_win):
+        if(not self.snake_is_alive):
             write_from_file("data/end_game_values.txt", "w", 
                 f"{self.collected_foods} {self.snake.get_snake_moves()}"
             )
 
             return "game_lost"
+        
+        if(self.game_win == 900):
+            return "game_won"
         
         for event in game_events:
             if event.type == pygame.KEYDOWN:

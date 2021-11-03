@@ -40,7 +40,7 @@ game_links = {
     "game_won": links.game_won,
 }
 
-current_link = "game_menu"
+current_link = "game_start"
 game_events = None
 
 keep_going = True
