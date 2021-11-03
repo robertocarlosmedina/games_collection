@@ -58,7 +58,6 @@ while keep_going:
                 exit()
 
     clock.tick(30)
-
     screen.fill(color.black.value)
 
     current_link = game_links[current_link](screen, screen_size, game_events)
