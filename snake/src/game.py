@@ -15,6 +15,7 @@ from src.font import Game_fonts as fonts
 from src.colors import Game_color as color
 from src.snake import Snake
 from src.food import Food
+from src.auxiliar_functions import display_game_snake_info, write_from_file
 
 class Game_loop:
     
@@ -22,8 +23,6 @@ class Game_loop:
     snake :Snake
     screen_size :tuple
     screen :pygame.Surface 
-    movement_display_surface :pygame.Surface 
-    food_display_surface :pygame.Surface 
     snake_is_alive :bool
     game_win :bool
     snake_step :int
@@ -38,8 +37,6 @@ class Game_loop:
         self.table_size_position["y_position"] = self.screen_size[1]/2 - self.table_size_position["height"]/2
         self.snake_step = 14
         self.collected_foods = 0
-        self.movement_display_surface = pygame.Surface((100, 100))
-        self.food_display_surface = pygame.Surface((100, 100))
         self.snake = Snake(
             screen = self.screen, 
             start_position = {
@@ -72,23 +69,6 @@ class Game_loop:
                 2
             )
             x += 14
-
-    def display_game_snake_info(self, info_name :str, value :int, position :dict, surface :pygame.Surface) -> None:
-        font_size :int
-        surface.fill(color.black.value)
-        pygame.draw.rect(
-            surface , 
-            color.green.value, 
-            pygame.Rect(1,1, 98,98),
-            1
-        )
-        font_size = pygame.font.Font.size(fonts.montserrat_small_font.value, f"{value}")
-        line = fonts.montserrat_small_font.value.render(f"{value}", True, color.white.value)
-        surface.blit(line, (50-font_size[0] / 2, 30))
-        font_size = pygame.font.Font.size(fonts.montserrat_super_small_font.value, f"{info_name}")
-        line = fonts.montserrat_super_small_font.value.render(f"{info_name}", True, color.white.value)
-        surface.blit(line, (50-font_size[0]/2, 60))
-        self.screen.blit(surface, (position["x"], position["y"]))
     
     def draw_game_elements(self) -> None:
         # To draw the table lines
@@ -108,12 +88,11 @@ class Game_loop:
         self.food.draw_food()
 
         self.snake_is_alive = self.snake.draw_snake(self.pressed_keys)
-        self.display_game_snake_info(info_name = "Movements", value = self.snake.get_snake_moves(), 
-            position = {"x":20, "y":190}, surface = self.movement_display_surface
-        )
-        self.display_game_snake_info(info_name = "Foods", value = self.collected_foods, 
-            position = {"x":580, "y":190}, surface = self.food_display_surface
-        )
+        display_game_snake_info(screen = self.screen, info_name = "Movements", value = self.snake.get_snake_moves(), 
+            position = {"x":20, "y":190})
+
+        display_game_snake_info(screen = self.screen, info_name = "Foods", value = self.collected_foods, 
+            position = {"x":580, "y":190})
     
     def game_events_handler(self, snake_head_rect :pygame.Rect, food_rect :pygame.Rect) -> None:
         if(snake_head_rect.colliderect(food_rect)):
@@ -123,9 +102,6 @@ class Game_loop:
         if(self.pressed_keys[pygame.K_f]):
             self.food.generate_new_food()
             
-        if(not self.snake_is_alive and not self.game_win):
-            # print("Dead snake!!")
-            pass
         for event in self.game_events:
             if (event.type == pygame.KEYDOWN):
                 self.snake.snake_move_direction_controlers()  
@@ -140,5 +116,17 @@ class Game_loop:
         food_rect  = self.food.get_food_rect()
         snake_head_rect = self.snake.get_snake_head_rect()
         self.game_events_handler(food_rect, snake_head_rect)
+
+        if(not self.snake_is_alive and not self.game_win):
+            write_from_file("data/end_game_values.txt", "w", 
+                f"{self.collected_foods} {self.snake.get_snake_moves()}"
+            )
+
+            return "game_lost"
+        
+        for event in game_events:
+            if event.type == pygame.KEYDOWN:
+                if pygame.key.get_pressed()[pygame.K_ESCAPE]:
+                    return "game_pause_menu"
 
         return "game_loop"

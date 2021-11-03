@@ -9,12 +9,14 @@ __status__ = "Production"
 """
 
 import pygame
-from pygame.constants import NOEVENT
+import os
 from src.font import Game_fonts as fonts
 from src.colors import Game_color as color
 from src.buttons import verticalButtonsDisplay
+from src.auxiliar_functions import draw_header_styled_lines, \
+    display_game_snake_info, read_from_file
 
-class Game_Lose:
+class Game_won:
 
     screen :pygame.Surface
     screen_size :tuple
@@ -24,20 +26,22 @@ class Game_Lose:
     menu_tittles :dict
     menus_start_positions :dict
     buttons_size :dict
+    game_data :list
 
     def __init__(self, screen, screen_size) -> None:
         self.screen = screen
         self.screen_size = screen_size
         self.button_clicked = ""
+        self.game_data = read_from_file("data/end_game_values.txt", "r", True)[0].split(" ")
         self.game_buttons = {
-            "new_game": "New Game",
+            "game_loop": "New Game",
             "game_menu": "Main Menu",
             "game_quit":"Quit"
         }
 
         self.menu_tittles = {
             "game_tittle": "Snake Game",
-            "game_menu_tittle": "Game Menu",
+            "game_menu_tittle": "Game Won !!",
             "self_play_menu": "Watch Snake Play"
         }
         self.buttons_size = {
@@ -50,32 +54,8 @@ class Game_Lose:
                 "y":190
             }
         }
-        
-    
-    def draw_styled_lines(self) -> None:
-        pygame.draw.line(
-            self.screen, 
-            color.green.value,
-            (self.screen_size[0]/2 - 190, 100), 
-            (self.screen_size[0]/2 + 190, 100), 
-            3
-        )
-        pygame.draw.line(
-            self.screen, 
-            color.grey.value,
-            (self.screen_size[0]/2 - 180, 95), 
-            (self.screen_size[0]/2 + 180, 95),  
-        )
-        pygame.draw.line(
-            self.screen, 
-            color.grey.value,
-            (self.screen_size[0]/2 - 180, 105), 
-            (self.screen_size[0]/2 + 180, 105), 
-            1
-        )
     
     def pause_menu_buttons(self) -> None:
-
         font_size = pygame.font.Font.size(fonts.montserrat_subbig_font.value, self.menu_tittles["game_menu_tittle"])
         line = fonts.montserrat_subbig_font.value.render(self.menu_tittles["game_menu_tittle"], True, color.green_1.value)
         self.screen.blit(
@@ -105,7 +85,13 @@ class Game_Lose:
         line = fonts.montserrat_big_font.value.render(self.menu_tittles["game_tittle"], True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), 25))
 
-        self.draw_styled_lines()
+        draw_header_styled_lines(self.screen, self.screen_size)
+
+        display_game_snake_info(screen = self.screen, info_name = "Foods", value = self.game_data[0], 
+            position = {"x":self.menus_start_positions["game_menu"]["x"] + 250, "y":225})
+
+        display_game_snake_info(screen = self.screen, info_name = "Movements", value = self.game_data[1], 
+            position = {"x":self.menus_start_positions["game_menu"]["x"] - 130, "y":225})
 
         self.pause_menu_buttons()
         
@@ -115,5 +101,4 @@ class Game_Lose:
                     self.button_clicked = ""
                     return key
         
-        return "game_lose"
-        
+        return "game_won"

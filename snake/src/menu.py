@@ -13,6 +13,7 @@ from pygame.constants import NOEVENT
 from src.font import Game_fonts as fonts
 from src.colors import Game_color as color
 from src.buttons import verticalButtonsDisplay
+from src.auxiliar_functions import draw_vertical_styled_lines
 
 class Game_menu:
 
@@ -30,8 +31,8 @@ class Game_menu:
         self.screen_size = screen_size
         self.button_clicked = ""
         self.game_buttons = {
-            "new_game": "New Game", 
-            "game_loop":"Continue", 
+            "game_loop": "New Game", 
+            "game_continue":"Continue", 
             "game_tutorial":"Tutorial", 
             "game_quit":"Quit"
         }
@@ -58,29 +59,6 @@ class Game_menu:
             "x":220,
             "y":50
         }
-    
-    def draw_styled_lines(self) -> None:
-        pygame.draw.line(
-            self.screen, 
-            color.green.value,
-            (self.screen_size[0]/2 , 140), 
-            (self.screen_size[0]/2, 430), 
-            3
-        )
-        pygame.draw.line(
-            self.screen, 
-            color.grey.value,
-            (self.screen_size[0]/2 - 7 , 150), 
-            (self.screen_size[0]/2 - 7, 420), 
-            
-        )
-        pygame.draw.line(
-            self.screen, 
-            color.grey.value,
-            (self.screen_size[0]/2 + 7, 150), 
-            (self.screen_size[0]/2 + 7, 420), 
-            1
-        )
     
     def game_play_buttons(self) -> None:
 
@@ -136,7 +114,7 @@ class Game_menu:
         line = fonts.montserrat_big_font.value.render(self.menu_tittles["game_tittle"], True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), 25))
 
-        self.draw_styled_lines()
+        draw_vertical_styled_lines(self.screen, self.screen_size)
 
         self.game_play_buttons()
         
