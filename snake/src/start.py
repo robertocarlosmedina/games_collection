@@ -4,6 +4,8 @@ __version__ = "0.0.1"
 __maintainer__ = "Roberto Medina"
 __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
+__file__ = "start.py"
+__path__ = "https://github.com/robertocarlosmedina/AI_games/tree/main/snake"
 
 """
 """
@@ -41,20 +43,16 @@ class Game_start:
         self.font1 = pygame.font.SysFont("arial", 9)
 
         # drawing tittle bottom info
-        size = pygame.font.Font.size(self.font1, 'Made by Roberto Medina')
-        line = self.font1.render('Made by Roberto Medina', True, color.white.value)
-        self.screen.blit(line, (self.screen_size[0]/2-size[0]/2, 430))
-        # drawing tittle bottom info
-        size = pygame.font.Font.size(self.font1, 'Contact info:')
-        line = self.font1.render('Contact info:', True, color.white.value)
+        size = pygame.font.Font.size(self.font1, f'Made by {__author__}')
+        line = self.font1.render(f'Made by {__author__}', True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-size[0]/2, 440))
-         # drawing tittle bottom info
-        size = pygame.font.Font.size(self.font1, 'robertocarlosmedina.dev@gmail.com')
-        line = self.font1.render('robertocarlosmedina.dev@gmail.com', True, color.white.value)
+        # drawing tittle bottom info
+        size = pygame.font.Font.size(self.font1, f'{__email__}')
+        line = self.font1.render(f'{__email__}', True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-size[0]/2, 450))
          # drawing tittle bottom info
-        size = pygame.font.Font.size(self.font1, 'https://robertocarlosmedina.github.io/rportfolio')
-        line = self.font1.render('https://robertocarlosmedina.github.io/rportfolio', True, color.white.value)
+        size = pygame.font.Font.size(self.font1, f'{__path__}')
+        line = self.font1.render(f'{__path__}', True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-size[0]/2, 460))
 
     # Method that control this class

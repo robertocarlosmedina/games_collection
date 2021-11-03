@@ -3,9 +3,24 @@ import pygame
 from src.colors import Game_color as color
 from src.font import Game_fonts as fonts
 
-surface = pygame.Surface((100, 100))
+
 file :object
 file_data :str
+surface :pygame.Surface
+screen_texts :dict
+
+
+surface = pygame.Surface((100, 100))
+screen_texts = {
+    "game_tittle": "Snake Game",
+    "game_subtittle": "Case study",
+    "game_main_menu_text": "Game Menu",
+    "self_play_menu_text": "Watch Snake Play",
+    "game_won_text": "You Won !!",
+    "game_lost_text": "You Lost !!",
+    "game_pause_menu_text": "Do you really want to finish the game?",
+}
+
 
 def draw_header_styled_lines(screen :pygame.Surface, screen_size :tuple) -> None:
     pygame.draw.line(
@@ -84,3 +99,6 @@ def write_from_file(file_path :str, mode :str, value :str) -> None:
     file = open(file_path, mode)
     file.write(value)
     file.close()
+
+def get_screen_text(text_name :str):
+    return screen_texts[text_name]
