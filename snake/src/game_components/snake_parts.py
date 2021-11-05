@@ -9,7 +9,7 @@ __status__ = "Production"
 """
 
 import pygame
-from src.colors import Game_color as color
+from src.support.colors import Game_color as color
 
 class Snake_part:
     part_position :dict

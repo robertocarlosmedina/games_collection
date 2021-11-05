@@ -9,7 +9,7 @@ __status__ = "Production"
 """
 
 import pygame
-from src.colors import Game_color as color
+from src.support.colors import Game_color as color
 
 
 def verticalButtonsDisplay(screen :pygame.Surface, buttons :list, start_position :dict, 

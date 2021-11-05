@@ -9,8 +9,8 @@ __status__ = "Production"
 """
 
 import pygame
-from src.game_links import Game_links as Link
-from src.colors import Game_color as color
+from src.support.game_links import Game_links as Link
+from src.support.colors import Game_color as color
 
 # variable declaration
 screen_size :tuple
@@ -38,9 +38,10 @@ game_links = {
     "game_pause_menu": links.game_pause_menu,
     "game_lost": links.game_lost,
     "game_won": links.game_won,
+    "game_self_play_hamiltoniano": links.hamiltonian_choices
 }
 
-current_link = "game_start"
+current_link = "game_self_play_hamiltoniano"
 game_events = None
 
 keep_going = True

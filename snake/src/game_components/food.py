@@ -10,7 +10,7 @@ __status__ = "Production"
 
 import pygame
 from random import choice
-from src.colors import Game_color as color
+from src.support.colors import Game_color as color
 
 
 class Food:

@@ -11,11 +11,12 @@ __status__ = "Production"
 import pygame
 from time import sleep
 from pygame import font
-from src.font import Game_fonts as fonts
-from src.colors import Game_color as color
-from src.snake import Snake
-from src.food import Food
-from src.auxiliar_functions import display_game_snake_info, \
+from src.support.font import Game_fonts as fonts
+from src.support.colors import Game_color as color
+from src.game_components.snake import Snake
+from src.game_components.food import Food
+from src.self_play.hamiltonian_algorithm import Hamiltonian_Algorithm
+from src.support.auxiliar_functions import display_game_snake_info, \
             get_screen_text, write_from_file
 
 class Game_loop:
@@ -29,13 +30,16 @@ class Game_loop:
     snake_step :int
     collected_foods :int
     game_events :pygame.event
+    play_algorithm :str
+    hamiltonian_algm :Hamiltonian_Algorithm
 
-    def __init__(self, screen :pygame.Surface, screen_size :list) -> None:
+    def __init__(self, screen :pygame.Surface, screen_size :list, algorithm = None ) -> None:
         self.screen = screen
         self.screen_size = screen_size
+        self.play_algorithm = algorithm
         self.table_size_position = {"widht": 420, "height": 420}
-        self.table_size_position["x_position"] = self.screen_size[0]/2 - self.table_size_position["widht"]/2
-        self.table_size_position["y_position"] = self.screen_size[1]/2 - self.table_size_position["height"]/2
+        self.table_size_position["x_position"] = int(self.screen_size[0]/2 - self.table_size_position["widht"]/2)
+        self.table_size_position["y_position"] = int(self.screen_size[1]/2 - self.table_size_position["height"]/2)
         self.snake_step = 14
         self.collected_foods = 0
         self.snake = Snake(
@@ -48,7 +52,12 @@ class Game_loop:
             snake_step = self.snake_step
         )
         self.food = Food(self.screen, self.table_size_position, self.snake_step)
-
+        self.set_up_game_mode()
+    
+    def set_up_game_mode(self):
+        if(self.play_algorithm):
+            self.hamiltonian_algm = Hamiltonian_Algorithm(self.play_algorithm, self.table_size_position)
+    
     def draw_table_lines(self) -> None:
         y = self.table_size_position["y_position"]
         for _ in range(31):
@@ -102,10 +111,20 @@ class Game_loop:
             self.collected_foods += 1
         if(self.pressed_keys[pygame.K_f]):
             self.food.generate_new_food()
+
+        if(not self.play_algorithm):
+            for event in self.game_events:
+                if (event.type == pygame.KEYDOWN):
+                    self.snake.snake_move_direction_controlers()
+        else:
+            snake_head_rect = self.snake.get_snake_head_rect()
+            move_to = self.hamiltonian_algm.execute_algorithm({
+                "x": snake_head_rect.x,
+                "y": snake_head_rect.y
+            })
             
-        for event in self.game_events:
-            if (event.type == pygame.KEYDOWN):
-                self.snake.snake_move_direction_controlers()  
+            self.snake.algorithm_play_activate_move(move_to)
+            # print(snake_head_react.x, snake_head_react.y, self.table_size_position)
 
     def run_link(self, game_events :pygame.event) -> str:
         food_rect : dict
@@ -122,7 +141,7 @@ class Game_loop:
             write_from_file("data/end_game_values.txt", "w", 
                 f"{self.collected_foods} {self.snake.get_snake_moves()}"
             )
-
+            sleep(2)
             return "game_lost"
         
         if(self.game_win == 900):

@@ -9,10 +9,10 @@ __status__ = "Production"
 """
 
 import pygame
-from src.font import Game_fonts as fonts
-from src.colors import Game_color as color
-from src.buttons import horizontalButtonDisplay
-from src.auxiliar_functions import get_screen_text
+from src.support.font import Game_fonts as fonts
+from src.support.colors import Game_color as color
+from src.support.buttons import horizontalButtonDisplay
+from src.support.auxiliar_functions import get_screen_text
 
 class Game_quit:
 

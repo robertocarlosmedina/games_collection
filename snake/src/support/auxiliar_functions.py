@@ -1,7 +1,6 @@
-from os import write
 import pygame
-from src.colors import Game_color as color
-from src.font import Game_fonts as fonts
+from src.support.colors import Game_color as color
+from src.support.font import Game_fonts as fonts
 
 
 file :object
@@ -20,7 +19,8 @@ screen_texts = {
     "game_lost_text": "You Lost !!",
     "game_quit_text": "Do you really want to finish the game?",
     "data_movements": "Movements",
-    "data_foods": "Foods"
+    "data_foods": "Foods",
+    "hamiltonian_choice_text": "Choice the Hamiltonian version"
 }
 
 

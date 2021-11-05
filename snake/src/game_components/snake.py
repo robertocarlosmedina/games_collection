@@ -10,8 +10,8 @@ __status__ = "Production"
 
 import pygame
 from random import randint
-from src.colors import Game_color as color
-from src.snake_parts import Snake_part
+from src.support.colors import Game_color as color
+from src.game_components.snake_parts import Snake_part
 
 
 class Snake:
@@ -122,6 +122,18 @@ class Snake:
 
     def get_snake_moves(self) -> int:
         return self.snake_moves
+
+    def algorithm_play_activate_move(self, move_to :str) -> None:
+        if(move_to != ""):
+            for key,values in self.snake_move_direction.items():
+                if values["move_to"] == move_to:
+                    # print("Move to: ", move_to)
+                    values["state"] = True
+                    self.current_orientation = values["orientation"]
+                    self.current_move_direction = values["move_to"]
+                else:
+                    values["state"] = False
+                self.snake_move_direction[key] = values       
 
     # To control the snake move direction
     def snake_move_direction_controlers(self) -> None:
@@ -234,6 +246,7 @@ class Snake:
                 if(values["state"] and self.make_step):
                     head_position = self.snake_parts[0].get_part_position()
                     self.update_parts_position(head_position)
+                    print(values["move_to"])
                     values["action"]()
                     self.make_step = False
                 

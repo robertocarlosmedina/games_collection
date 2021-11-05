@@ -10,9 +10,8 @@ __path__ = "https://github.com/robertocarlosmedina/AI_games/tree/main/snake"
 """
 """
 import pygame
-from pygame.scrap import get
-from src.colors import Game_color as color
-from src.auxiliar_functions import get_screen_text
+from src.support.colors import Game_color as color
+from src.support.auxiliar_functions import get_screen_text
 
 # class that control the initial painel 
 class Game_start:

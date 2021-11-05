@@ -10,14 +10,15 @@ __status__ = "Production"
 
 from typing import overload
 import pygame
-from src.pause_menu import Game_Pause_Menu
-from src.game_lost import Game_Lost
-from src.game_won import Game_won
-from src.game import Game_loop
-from src.start import Game_start
-from src.menu import Game_menu
-from src.quit import Game_quit
-from src.tutorial import Game_Turorial 
+from src.pages.pause_menu import Game_Pause_Menu
+from src.pages.game_lost import Game_Lost
+from src.pages.game_won import Game_won
+from src.game_components.game import Game_loop
+from src.pages.start import Game_start
+from src.pages.menu import Game_menu
+from src.pages.quit import Game_quit
+from src.pages.tutorial import Game_Turorial
+from src.pages.hamiltonian_choice import Hamiltonian_Choice
 
 
 class Game_links:
@@ -83,4 +84,10 @@ class Game_links:
         if(not isinstance(self.game_page_object, Game_Lost)):
             self.game_backup = object
             self.game_page_object = Game_Lost(screen, screen_size)
+        return  self.game_page_object.run_link(game_event)
+    
+    def hamiltonian_choices(self, screen :pygame.Surface, screen_size :tuple, game_event :pygame.event) -> str:
+        if(not isinstance(self.game_page_object, Hamiltonian_Choice)):
+            self.game_backup = object
+            self.game_page_object = Hamiltonian_Choice(screen, screen_size)
         return  self.game_page_object.run_link(game_event)
