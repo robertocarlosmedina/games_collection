@@ -26,7 +26,7 @@ class Hamiltonian_Choice:
     menus_start_positions :dict
     buttons_size :dict
     on_game_play :bool
-    obje :object
+    game_object :object
 
     def __init__(self, screen, screen_size) -> None:
         self.screen = screen
@@ -81,18 +81,20 @@ class Hamiltonian_Choice:
             self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), 25))
 
             draw_header_styled_lines(self.screen, self.screen_size)
-
             self.menu_buttons()
-
+        
         if (self.button_clicked != "" ):
             for key,value in self.game_buttons.items():
                 if(self.button_clicked == value):
                     if(not self.on_game_play):
-                        self.obje = Game_loop(screen = self.screen, screen_size = self.screen_size, algorithm = key)
+                        self.game_object = Game_loop(screen = self.screen, screen_size = self.screen_size, algorithm = key)
                         self.on_game_play = True
 
                     if(self.on_game_play):
-                        ok = self.obje.run_link(game_events)
+                        go_to = self.game_object.run_link(game_events)
+                        if (go_to == "game_won"):
+                            return go_to
+                        # return go_to
         
         return "game_self_play_hamiltoniano"
         

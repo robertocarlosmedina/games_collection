@@ -16,12 +16,14 @@ class Snake_part:
     screen :pygame.Surface
     part_rect :pygame.Rect
     part_color :tuple
+    snake_size :int
 
-    def __init__(self, screen :pygame.Surface, position: dict, part_color=color.green.value) -> None:
+    def __init__(self, screen :pygame.Surface, position: dict, snake_size :int, part_color=color.green.value) -> None:
         self.screen = screen
         self.part_position = position
         self.part_rect = None
         self.part_color = part_color
+        self.snake_size = snake_size
     
     def get_part_position(self) -> dict:
         return self.part_position
@@ -36,7 +38,7 @@ class Snake_part:
         self.part_rect = pygame.Rect(
             self.part_position["x"],
             self.part_position["y"], 
-            14,14
+            self.snake_size,self.snake_size
         )
 
         pygame.draw.rect(

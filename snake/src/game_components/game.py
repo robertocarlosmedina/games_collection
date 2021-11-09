@@ -37,45 +37,57 @@ class Game_loop:
         self.screen = screen
         self.screen_size = screen_size
         self.play_algorithm = algorithm
-        self.table_size_position = {"widht": 420, "height": 420}
+        self.table_size_position = {"widht": 336, "height": 336}
         self.table_size_position["x_position"] = int(self.screen_size[0]/2 - self.table_size_position["widht"]/2)
         self.table_size_position["y_position"] = int(self.screen_size[1]/2 - self.table_size_position["height"]/2)
         self.snake_step = 14
         self.collected_foods = 0
-        self.snake = Snake(
+        self.food = Food(self.screen, self.table_size_position, self.snake_step)
+        self.set_up_game_mode()
+    
+    def set_up_game_mode(self):
+        if(self.play_algorithm):
+            self.hamiltonian_algm = Hamiltonian_Algorithm(self.play_algorithm, self.table_size_position, self.snake_step)
+            self.snake = Snake(
             screen = self.screen, 
             start_position = {
                 "x": self.table_size_position["x_position"]+1,
                 "y": self.table_size_position["y_position"]+1
             },
             table_size_position = self.table_size_position,
-            snake_step = self.snake_step
-        )
-        self.food = Food(self.screen, self.table_size_position, self.snake_step)
-        self.set_up_game_mode()
-    
-    def set_up_game_mode(self):
-        if(self.play_algorithm):
-            self.hamiltonian_algm = Hamiltonian_Algorithm(self.play_algorithm, self.table_size_position)
+            snake_step = self.snake_step,
+            automated = True
+            )
+            self.snake.change_snake_speed(1)
+        else:
+            self.snake = Snake(
+                screen = self.screen, 
+                start_position = {
+                    "x": self.table_size_position["x_position"]+1,
+                    "y": self.table_size_position["y_position"]+1
+                },
+                table_size_position = self.table_size_position,
+                snake_step = self.snake_step,
+            )
     
     def draw_table_lines(self) -> None:
         y = self.table_size_position["y_position"]
-        for _ in range(31):
+        for _ in range(int(self.table_size_position["widht"]/self.snake_step) + 1):
             pygame.draw.line(
                 self.screen, 
                 color.grey1.value,
                 (self.table_size_position["x_position"], y), 
-                (self.table_size_position["x_position"]+420, y), 
+                (self.table_size_position["x_position"]+self.table_size_position["widht"], y), 
                 2
             )
             y += 14
         x = self.table_size_position["x_position"]
-        for _ in range(31):
+        for _ in range(int(self.table_size_position["widht"]/self.snake_step) + 1):
             pygame.draw.line(
                 self.screen, 
                 color.grey1.value,
                 (x, self.table_size_position["y_position"]), 
-                (x, self.table_size_position["y_position"]+420), 
+                (x, self.table_size_position["y_position"]+self.table_size_position["widht"]), 
                 2
             )
             x += 14
@@ -99,10 +111,10 @@ class Game_loop:
 
         self.snake_is_alive = self.snake.draw_snake(self.pressed_keys)
         display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_movements"), value = self.snake.get_snake_moves(), 
-            position = {"x":20, "y":190})
+            position = {"x":40, "y":190})
 
         display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_foods"), value = self.collected_foods, 
-            position = {"x":580, "y":190})
+            position = {"x":560, "y":190})
     
     def game_events_handler(self, snake_head_rect :pygame.Rect, food_rect :pygame.Rect) -> None:
         if(snake_head_rect.colliderect(food_rect)):
@@ -118,13 +130,15 @@ class Game_loop:
                     self.snake.snake_move_direction_controlers()
         else:
             snake_head_rect = self.snake.get_snake_head_rect()
-            move_to = self.hamiltonian_algm.execute_algorithm({
+            move_to = self.hamiltonian_algm.execute_algorithm(
+                {
                 "x": snake_head_rect.x,
                 "y": snake_head_rect.y
-            })
+                },
+                self.snake.get_current_direction()
+            )
             
             self.snake.algorithm_play_activate_move(move_to)
-            # print(snake_head_react.x, snake_head_react.y, self.table_size_position)
 
     def run_link(self, game_events :pygame.event) -> str:
         food_rect : dict
@@ -145,6 +159,10 @@ class Game_loop:
             return "game_lost"
         
         if(self.game_win == 900):
+            write_from_file("data/end_game_values.txt", "w", 
+                f"{self.collected_foods} {self.snake.get_snake_moves()}"
+            )
+            sleep(2)
             return "game_won"
         
         for event in game_events:

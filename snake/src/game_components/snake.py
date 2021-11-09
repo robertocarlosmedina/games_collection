@@ -30,8 +30,9 @@ class Snake:
     snake_step : int # the number of pixel that takes to make a step
     start_position :dict # initial position of the snake
     snake_moves :int # Number of moves maked by the snake
+    automated :bool #To control if the snake is automated or not
 
-    def __init__(self, screen :pygame.Surface, start_position : dict, table_size_position :dict, snake_step :int) -> None:
+    def __init__(self, screen :pygame.Surface, start_position : dict, table_size_position :dict, snake_step :int, automated = False) -> None:
         self.screen = screen
         self.snake_step = snake_step
         self.table_size_position = table_size_position
@@ -44,6 +45,7 @@ class Snake:
         self.dead_delay = 3 
         self.dead_counter = 0
         self.snake_moves = 0
+        self.automated = automated
 
         self.start_snake_controlers_and_parts()
 
@@ -80,8 +82,14 @@ class Snake:
         }
         self.current_orientation = "horizontal"
         self.current_move_direction = "right"
-        x_position = self.start_position["x"] + 14*randint(5,16)
-        y_position = self.start_position["y"] + 14*randint(5,25)
+
+        if (not self.automated):
+            x_position = self.start_position["x"] + self.snake_step *randint(5,16)
+            y_position = self.start_position["y"] + self.snake_step *randint(5,16)
+        else:
+            x_position = self.start_position["x"] + self.snake_step * 2
+            y_position = self.start_position["y"]
+
         self.snake_parts = [
             Snake_part(
                 screen=self.screen, 
@@ -89,30 +97,34 @@ class Snake:
                     "x": x_position,
                     "y": y_position,
                 },
-                part_color=color.blue.value
+                part_color=color.blue.value,
+                snake_size = self.snake_step
             ),
             Snake_part(
                 screen=self.screen, 
                 position={
-                    "x": x_position - 14,
+                    "x": x_position - self.snake_step,
                     "y": y_position,
                 },
-                part_color=color.blue_1.value
+                part_color=color.blue_1.value,
+                snake_size = self.snake_step
             )
             ,
             Snake_part(screen=self.screen, 
                 position={
-                "x": x_position - 28,
+                "x": x_position - self.snake_step*2,
                 "y": y_position,
                 },
-                part_color=color.blue_2.value
+                part_color=color.blue_2.value,
+                snake_size = self.snake_step
             )
             ,
             Snake_part(screen=self.screen, 
                 position={
-                "x": x_position - 42,
+                "x": x_position - self.snake_step*3,
                 "y": y_position,
-                }
+                },
+                snake_size = self.snake_step
             )
         ]
 
@@ -123,6 +135,9 @@ class Snake:
     def get_snake_moves(self) -> int:
         return self.snake_moves
 
+    def get_current_direction(self):
+        return [values["move_to"] for key, values in self.snake_move_direction.items() if values["state"]][0]
+
     def algorithm_play_activate_move(self, move_to :str) -> None:
         if(move_to != ""):
             for key,values in self.snake_move_direction.items():
@@ -131,6 +146,7 @@ class Snake:
                     values["state"] = True
                     self.current_orientation = values["orientation"]
                     self.current_move_direction = values["move_to"]
+                    self.snake_moves += 1
                 else:
                     values["state"] = False
                 self.snake_move_direction[key] = values       
@@ -162,37 +178,40 @@ class Snake:
 
 
     def snake_moving_up(self) -> None:
-        if(self.snake_parts[0].part_position["y"] > self.table_size_position["y_position"]+14):
+        if(self.snake_parts[0].part_position["y"] > self.table_size_position["y_position"]+self.snake_step):
             self.snake_parts[0].part_position["y"] -= self.snake_step
         else:
             self.dead_counter += 1
     
     def snake_moving_down(self) -> None:
         if(self.snake_parts[0].part_position["y"] < self.table_size_position["y_position"]+
-                    self.table_size_position["height"]-14):
+                    self.table_size_position["height"]-self.snake_step):
             self.snake_parts[0].part_position["y"] += self.snake_step
         else:
             self.dead_counter += 1
 
     def snake_moving_right(self) -> None:
         if(self.snake_parts[0].part_position["x"] < self.table_size_position["x_position"]+
-                    self.table_size_position["widht"]-14):
+                    self.table_size_position["widht"]-self.snake_step):
             self.snake_parts[0].part_position["x"] += self.snake_step
         else:
             self.dead_counter += 1
 
     def snake_moving_left(self) -> None:
-        if(self.snake_parts[0].part_position["x"] > self.table_size_position["x_position"]+14):
+        if(self.snake_parts[0].part_position["x"] > self.table_size_position["x_position"]+self.snake_step):
             self.snake_parts[0].part_position["x"] -= self.snake_step
         else:
             self.dead_counter += 1
 
     def control_speed_and_steps(self) -> None:
-        if (self.speed_couter == self.snake_speed):
-            self.make_step = True
-            self.speed_couter = 0
+        if(not self.automated):
+            if (self.speed_couter == self.snake_speed):
+                self.make_step = True
+                self.speed_couter = 0
+            else:
+                self.speed_couter += 1
         else:
-            self.speed_couter += 1
+            self.make_step = True
 
     def check_game_end(self) -> bool:
         return len(self.snake_parts)
@@ -219,8 +238,9 @@ class Snake:
 
         self.snake_parts.append(
             Snake_part(
-                screen=self.screen, 
-                position=last_part_position
+                screen = self.screen, 
+                position = last_part_position,
+                snake_size = self.snake_step
             )
         )
     
@@ -246,7 +266,7 @@ class Snake:
                 if(values["state"] and self.make_step):
                     head_position = self.snake_parts[0].get_part_position()
                     self.update_parts_position(head_position)
-                    print(values["move_to"])
+                    # print(values["move_to"])
                     values["action"]()
                     self.make_step = False
                 

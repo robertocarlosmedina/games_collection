@@ -41,8 +41,8 @@ game_links = {
     "game_self_play_hamiltoniano": links.hamiltonian_choices
 }
 
-current_link = "game_self_play_hamiltoniano"
 game_events = None
+current_link = "game_start"
 
 keep_going = True
 
