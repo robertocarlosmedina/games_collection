@@ -8,7 +8,6 @@ __status__ = "Production"
 """
 """
 
-from typing import overload
 import pygame
 from src.pages.pause_menu import Game_Pause_Menu
 from src.pages.game_lost import Game_Lost
@@ -17,7 +16,7 @@ from src.game_components.game import Game_loop
 from src.pages.start import Game_start
 from src.pages.menu import Game_menu
 from src.pages.quit import Game_quit
-from src.pages.tutorial import Game_Turorial
+from src.pages.credits import Game_Credits
 from src.pages.hamiltonian_choice import Hamiltonian_Choice
 
 
@@ -59,9 +58,9 @@ class Game_links:
 
         return  next_page
 
-    def game_tutorial(self, screen :pygame.Surface, screen_size :tuple, game_event :pygame.event) -> str:
-        if(not isinstance(self.game_page_object, Game_Turorial)):
-            self.game_page_object = Game_Turorial(screen, screen_size)
+    def game_credits(self, screen :pygame.Surface, screen_size :tuple, game_event :pygame.event) -> str:
+        if(not isinstance(self.game_page_object, Game_Credits)):
+            self.game_page_object = Game_Credits(screen, screen_size)
         return  self.game_page_object.run_link(game_event)
 
     def game_quit(self, screen :pygame.Surface, screen_size :tuple, game_event :pygame.event) -> str:

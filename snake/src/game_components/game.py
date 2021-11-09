@@ -42,7 +42,7 @@ class Game_loop:
         self.table_size_position = {"widht": self.snake_step*self.cubo_size, "height": self.snake_step*self.cubo_size}
         self.table_size_position["x_position"] = int(self.screen_size[0]/2 - self.table_size_position["widht"]/2)
         self.table_size_position["y_position"] = int(self.screen_size[1]/2 - self.table_size_position["height"]/2)
-        self.collected_foods = 0
+        self.collected_foods = 3
         self.set_up_game_mode()
     
     def set_up_game_mode(self):

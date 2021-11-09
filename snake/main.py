@@ -33,7 +33,7 @@ game_links = {
     "game_menu": links.game_main_menu,
     "game_loop": links.gameplay_loop,
     "game_quit": links.game_quit,
-    "game_tutorial": links.game_tutorial,
+    "game_credits": links.game_credits,
     "game_continue": links.continue_game,
     "game_pause_menu": links.game_pause_menu,
     "game_lost": links.game_lost,
@@ -58,7 +58,7 @@ while keep_going:
             if pygame.key.get_pressed()[pygame.K_KP_ENTER]:
                 exit()
 
-    # clock.tick(160)
+    clock.tick(30)
     screen.fill(color.black.value)
 
     current_link = game_links[current_link](screen, screen_size, game_events)

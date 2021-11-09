@@ -20,7 +20,8 @@ screen_texts = {
     "game_quit_text": "Do you really want to finish the game?",
     "data_movements": "Movements",
     "data_foods": "Foods",
-    "hamiltonian_choice_text": "Choice the Hamiltonian version"
+    "hamiltonian_choice_text": "Choice the Hamiltonian version",
+    "author_text": ["This projects is for education porpuse,", "feel free to use and share it.", "And also make your contribution."]
 }
 
 

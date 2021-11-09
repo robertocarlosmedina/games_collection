@@ -33,7 +33,7 @@ class Game_menu:
         self.game_buttons = {
             "game_loop": "New Game", 
             "game_continue":"Continue", 
-            "game_tutorial":"Tutorial", 
+            "game_credits":"Credits", 
             "game_quit":"Quit"
         }
         self.algorithms_buttons = {
