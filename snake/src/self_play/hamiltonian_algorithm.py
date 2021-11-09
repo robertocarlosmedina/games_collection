@@ -76,10 +76,10 @@ class Hamiltonian_Algorithm:
             }
 
     def hamiltonian_horizontal(self, snake_head_position :dict) -> str:
-        print(self.current_direction)
+        # print(self.current_direction)
         for key,values in self.possible_move[self.current_direction].items():
             if(snake_head_position["x"] in range(values[0], values[1]) and snake_head_position["y"] in range(values[2], values[3])):
-                print(f"New position: {key}")
+                # print(f"New position: {key}")
                 return key
 
         return ""
