@@ -82,11 +82,11 @@ class Game_won:
 
         draw_header_styled_lines(self.screen, self.screen_size)
 
-        display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_movements"), value = self.game_data[1], 
-            position = {"x":20, "y":190})
+        display_game_snake_info(screen = self.screen, info_name = "Foods", value = self.game_data[0], 
+            position = {"x":self.menus_start_positions["game_menu"]["x"] + 250, "y":225})
 
-        display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_foods"), value = self.game_data[0], 
-            position = {"x":580, "y":190})
+        display_game_snake_info(screen = self.screen, info_name = "Movements", value = self.game_data[1], 
+            position = {"x":self.menus_start_positions["game_menu"]["x"] - 130, "y":225})
 
         self.pause_menu_buttons()
         

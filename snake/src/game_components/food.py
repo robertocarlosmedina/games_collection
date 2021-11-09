@@ -51,11 +51,17 @@ class Food:
 
     def calculate_possible_food_positions(self) -> None:
         self.possible_food_positions = []
+        is_in_snake_parts :bool
         snakes_parts_positions = [(pos.x-1, pos.y-1) for pos in self.snake_positions]
+        
         for pos in self.all_possible_position:
+            is_in_snake_parts = False
             for snake_pos in snakes_parts_positions:
-                if (pos != snake_pos):
-                    self.possible_food_positions.append(pos)                
+                if (pos == snake_pos):
+                    is_in_snake_parts = True
+
+            if(not is_in_snake_parts):
+                self.possible_food_positions.append(pos)                
 
     def generate_new_food(self, snake_parts_rects :int) -> None:
         self.snake_positions = snake_parts_rects

@@ -58,7 +58,7 @@ while keep_going:
             if pygame.key.get_pressed()[pygame.K_KP_ENTER]:
                 exit()
 
-    clock.tick(90)
+    # clock.tick(160)
     screen.fill(color.black.value)
 
     current_link = game_links[current_link](screen, screen_size, game_events)
