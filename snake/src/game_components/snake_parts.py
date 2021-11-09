@@ -24,6 +24,11 @@ class Snake_part:
         self.part_rect = None
         self.part_color = part_color
         self.snake_size = snake_size
+        self.part_rect = pygame.Rect(
+            self.part_position["x"],
+            self.part_position["y"], 
+            self.snake_size,self.snake_size
+        )
     
     def get_part_position(self) -> dict:
         return self.part_position

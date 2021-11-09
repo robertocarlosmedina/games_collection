@@ -135,6 +135,9 @@ class Snake:
     def get_snake_moves(self) -> int:
         return self.snake_moves
 
+    def get_snake_parts_rects(self) -> list:       
+        return [snake_part.get_part_rect() for snake_part in self.snake_parts]
+
     def get_current_direction(self):
         return [values["move_to"] for key, values in self.snake_move_direction.items() if values["state"]][0]
 
@@ -142,7 +145,6 @@ class Snake:
         if(move_to != ""):
             for key,values in self.snake_move_direction.items():
                 if values["move_to"] == move_to:
-                    # print("Move to: ", move_to)
                     values["state"] = True
                     self.current_orientation = values["orientation"]
                     self.current_move_direction = values["move_to"]
@@ -266,7 +268,6 @@ class Snake:
                 if(values["state"] and self.make_step):
                     head_position = self.snake_parts[0].get_part_position()
                     self.update_parts_position(head_position)
-                    # print(values["move_to"])
                     values["action"]()
                     self.make_step = False
                 

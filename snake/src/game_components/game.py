@@ -37,12 +37,12 @@ class Game_loop:
         self.screen = screen
         self.screen_size = screen_size
         self.play_algorithm = algorithm
-        self.table_size_position = {"widht": 336, "height": 336}
+        self.cubo_size = 20
+        self.snake_step = 14
+        self.table_size_position = {"widht": self.snake_step*self.cubo_size, "height": self.snake_step*self.cubo_size}
         self.table_size_position["x_position"] = int(self.screen_size[0]/2 - self.table_size_position["widht"]/2)
         self.table_size_position["y_position"] = int(self.screen_size[1]/2 - self.table_size_position["height"]/2)
-        self.snake_step = 14
         self.collected_foods = 0
-        self.food = Food(self.screen, self.table_size_position, self.snake_step)
         self.set_up_game_mode()
     
     def set_up_game_mode(self):
@@ -69,6 +69,8 @@ class Game_loop:
                 table_size_position = self.table_size_position,
                 snake_step = self.snake_step,
             )
+
+        self.food = Food(self.screen, self.table_size_position, self.snake_step, self.snake.get_snake_parts_rects())
     
     def draw_table_lines(self) -> None:
         y = self.table_size_position["y_position"]
@@ -118,11 +120,12 @@ class Game_loop:
     
     def game_events_handler(self, snake_head_rect :pygame.Rect, food_rect :pygame.Rect) -> None:
         if(snake_head_rect.colliderect(food_rect)):
-            self.food.generate_new_food()
+            self.food.generate_new_food(self.snake.get_snake_parts_rects())
             self.snake.add_snake_part()
             self.collected_foods += 1
+
         if(self.pressed_keys[pygame.K_f]):
-            self.food.generate_new_food()
+            self.food.generate_new_food(self.snake.get_snake_parts_rects())
 
         if(not self.play_algorithm):
             for event in self.game_events:
@@ -158,7 +161,7 @@ class Game_loop:
             sleep(2)
             return "game_lost"
         
-        if(self.game_win == 900):
+        if(self.game_win == self.cubo_size * self.cubo_size):
             write_from_file("data/end_game_values.txt", "w", 
                 f"{self.collected_foods} {self.snake.get_snake_moves()}"
             )
