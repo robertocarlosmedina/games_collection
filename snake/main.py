@@ -42,7 +42,7 @@ game_links = {
 }
 
 game_events = None
-current_link = "game_start"
+current_link = "game_menu"
 
 keep_going = True
 
@@ -58,7 +58,11 @@ while keep_going:
             if pygame.key.get_pressed()[pygame.K_KP_ENTER]:
                 exit()
 
-    clock.tick(30)
+    if(current_link != "game_self_play_hamiltoniano"):
+        clock.tick(30)
+    else:
+        clock.tick(160)
+
     screen.fill(color.black.value)
 
     current_link = game_links[current_link](screen, screen_size, game_events)

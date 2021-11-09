@@ -17,11 +17,12 @@ screen_texts = {
     "self_play_menu_text": "Watch Snake Play",
     "game_won_text": "You Won !!",
     "game_lost_text": "You Lost !!",
+    "game_credits_tittle": "Game credits",
     "game_quit_text": "Do you really want to finish the game?",
     "data_movements": "Movements",
     "data_foods": "Foods",
     "hamiltonian_choice_text": "Choice the Hamiltonian version",
-    "author_text": ["This projects is for education porpuse,", "feel free to use and share it.", "And also make your contribution."]
+    "author_text": ['"This project is for educational use, feel free to use', "and share it. And if you find it useful,", "don't forget to support the project by", 'making your contribution."']
 }
 
 

@@ -13,8 +13,7 @@ from pygame.constants import NOEVENT
 from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
 from src.support.buttons import verticalButtonsDisplay
-from src.support.auxiliar_functions import draw_header_styled_lines, \
-    display_game_snake_info, read_from_file, get_screen_text
+from src.support.auxiliar_functions import draw_header_styled_lines, get_screen_text
 
 class Game_Credits:
 
@@ -47,13 +46,36 @@ class Game_Credits:
     
     def credits_content(self) -> None:
 
-        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_lost_text"))
-        line = fonts.montserrat_size_22.value.render(get_screen_text("game_lost_text"), True, color.red.value)
+        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_credits_tittle"))
+        line = fonts.montserrat_size_22.value.render(get_screen_text("game_credits_tittle"), True, color.green.value)
         self.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
                 self.menus_start_positions["game_menu"]["y"]-font_size[1]*2)
         )
+        draw_header_styled_lines(self.screen, self.screen_size)
+
+        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, f"Game made by {__author__}")
+        line = fonts.montserrat_size_22.value.render(f"Game made by {__author__}", True, color.white.value)
+        self.screen.blit(
+            line, 
+            (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
+                self.menus_start_positions["game_menu"]["y"]+font_size[1]/2)
+        )
+        
+        y = font_size[1] + 20
+        for text in get_screen_text("author_text"):
+            font_size = pygame.font.Font.size(fonts.montserrat_size_16.value, text)
+            line = fonts.montserrat_size_16.value.render(text, True, color.white1.value)
+            self.screen.blit(
+                line, 
+                (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
+                    self.menus_start_positions["game_menu"]["y"]+font_size[1]/2 + y)
+            )
+            y += font_size[1]
+
+        
+
 
     def run_link(self, game_events :pygame.event) -> str:
         del game_events
@@ -64,6 +86,19 @@ class Game_Credits:
         self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), 25))
 
         self.credits_content()
+
+        self.button_clicked = verticalButtonsDisplay(
+            screen = self.screen,
+            buttons = self.game_buttons.values(),
+            start_position = {
+                "x":self.menus_start_positions["game_menu"]["x"],
+                "y":self.menus_start_positions["game_menu"]["y"]+180
+            },
+            box_dim = self.buttons_size,
+            mouse_pos = self.mouse_pos,
+            font = fonts.montserrat_size_16.value,
+            button_clicked = self.button_clicked
+        )
         
         if (self.button_clicked != "" ):
             for key,value in self.game_buttons.items():

@@ -35,8 +35,8 @@ class Hamiltonian_Choice:
         self.on_game_play = False
         self.game_buttons = {
             "hamiltonian_horizontal": "Horizontal", 
-            "hamiltonian_vertical":"Vertical", 
-            "hamiltonian_spiral":"Spiral", 
+            # "hamiltonian_vertical":"Vertical", 
+            # "hamiltonian_spiral":"Spiral", 
             "game_menu":"Main Menu"
         }
         self.buttons_size = {

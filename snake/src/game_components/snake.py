@@ -39,7 +39,7 @@ class Snake:
         self.start_position = start_position
         self.pressed_keys = None 
         self.speed_couter = 0 
-        self.snake_speed = 6 
+        self.snake_speed = 9
         self.make_step = False 
         self.snake_self_collision = False 
         self.dead_delay = 3 
@@ -84,7 +84,7 @@ class Snake:
         self.current_move_direction = "right"
 
         if (not self.automated):
-            x_position = self.start_position["x"] + self.snake_step *randint(5,16)
+            x_position = self.start_position["x"] + self.snake_step *randint(3,16)
             y_position = self.start_position["y"] + self.snake_step *randint(5,16)
         else:
             x_position = self.start_position["x"] + self.snake_step * 2
@@ -237,7 +237,6 @@ class Snake:
 
     def add_snake_part (self) -> None:
         last_part_position = self.snake_parts[len(self.snake_parts)-1].get_part_position()
-
         self.snake_parts.append(
             Snake_part(
                 screen = self.screen, 
@@ -245,6 +244,14 @@ class Snake:
                 snake_size = self.snake_step
             )
         )
+        if(len(self.snake_parts) > 40):
+            self.snake_speed = 7
+        elif(len(self.snake_parts) > 80):
+            self.snake_speed = 5
+        elif(len(self.snake_parts) > 120):
+            self.snake_speed = 3
+        elif(len(self.snake_parts) > 200):
+            self.snake_speed = 2
     
     def draw_snake(self, presssed_keys :pygame.key) -> bool:
         head_position :dict
