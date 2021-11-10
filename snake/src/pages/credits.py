@@ -31,7 +31,7 @@ class Game_Credits:
         self.screen_size = screen_size
         self.button_clicked = ""
         self.game_buttons = {
-            "game_menu": "Main Menu",
+            "game_menu": "Back",
         }
         self.buttons_size = {
             "x":220,
