@@ -74,9 +74,6 @@ class Game_Credits:
             )
             y += font_size[1]
 
-        
-
-
     def run_link(self, game_events :pygame.event) -> str:
         del game_events
         self.mouse_pos = pygame.mouse.get_pos()

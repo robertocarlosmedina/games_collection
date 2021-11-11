@@ -19,10 +19,11 @@ def verticalButtonsDisplay(screen :pygame.Surface, buttons :list, start_position
         font_size = pygame.font.Font.size(font, button)
         button_box = pygame.Rect(start_position["x"], start_position["y"], box_dim["x"], box_dim["y"])
 
-        click = pygame.mouse.get_pressed(3)
+        mouse_click = pygame.mouse.get_pressed(3)
+        
         if mouse_pos[0]in range(start_position["x"], start_position["x"]+box_dim["x"]) and \
            mouse_pos[1] in range(start_position["y"], start_position["y"]+box_dim["y"])\
-           and click[0] == 1:
+           and mouse_click[0] == 1:
             button_clicked = button
 
         # hover button effect
@@ -56,10 +57,10 @@ def horizontalButtonDisplay(screen :pygame.Surface, buttons :list, start_positio
         font_size = pygame.font.Font.size(font, button)
         button_box = pygame.Rect(start_position["x"], start_position["y"], box_dim["x"], box_dim["y"])
 
-        click = pygame.mouse.get_pressed(3)
+        mouse_click = pygame.mouse.get_pressed(3)
         if mouse_pos[0]in range(start_position["x"], start_position["x"]+box_dim["x"]) and \
            mouse_pos[1] in range(start_position["y"], start_position["y"]+box_dim["y"])\
-           and click[0] == 1:
+           and mouse_click[0] == 1:
             button_clicked = button
 
         # hover button effect

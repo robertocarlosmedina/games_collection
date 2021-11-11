@@ -6,6 +6,7 @@ __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
 """
+    Thic class is the one that control the snake moves and events ont the screen.
 """
 
 import pygame
@@ -128,7 +129,7 @@ class Snake:
             )
         ]
 
-    # to change the snake speed
+    # To change the snake speed
     def change_snake_speed(self, new_speed :int) -> None:
         self.snake_speed = new_speed
 

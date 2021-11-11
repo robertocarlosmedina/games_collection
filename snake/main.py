@@ -28,6 +28,7 @@ pygame.display.set_caption('Snake')
 
 links = Link()
 
+# Making the dict of the game links name and the related function
 game_links = {
     "game_start": links.start_game,
     "game_menu": links.game_main_menu,
@@ -42,7 +43,7 @@ game_links = {
 }
 
 game_events = None
-current_link = "game_start"
+current_link = "game_menu"
 
 keep_going = True
 
@@ -65,6 +66,8 @@ while keep_going:
 
     screen.fill(color.black.value)
 
+    # All the links have a function that will start the instance of 
+    # the page that the user want
     current_link = game_links[current_link](screen, screen_size, game_events)
     
     pygame.display.update()

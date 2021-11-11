@@ -6,6 +6,9 @@ __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
 """
+    This is the main menu class. This class controls all the navegation that
+    can be made on the game.
+
 """
 
 import pygame
@@ -30,6 +33,10 @@ class Game_menu:
         self.screen = screen
         self.screen_size = screen_size
         self.button_clicked = ""
+        self.start_buttons_info()
+    
+
+    def start_buttons_info(self):
         self.game_buttons = {
             "game_loop": "New Game", 
             "game_continue":"Continue", 

@@ -2,12 +2,10 @@ import pygame
 from src.support.colors import Game_color as color
 from src.support.font import Game_fonts as fonts
 
-
 file :object
 file_data :str
 surface :pygame.Surface
 screen_texts :dict
-
 
 surface = pygame.Surface((100, 100))
 screen_texts = {
