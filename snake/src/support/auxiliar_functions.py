@@ -18,7 +18,7 @@ screen_texts = {
     "game_credits_tittle": "Game credits",
     "game_quit_text": "Do you really want to finish the game?",
     "data_movements": "Movements",
-    "data_foods": "Foods",
+    "data_foods": "Collected",
     "hamiltonian_choice_text": "Choice the Hamiltonian version",
     "author_text": ['"This project is for educational use, feel free to use', "and share it. And if you find it useful,", "don't forget to support the project by", 'making your contribution."']
 }

@@ -43,7 +43,7 @@ game_links = {
 }
 
 game_events = None
-current_link = "game_menu"
+current_link = "game_start"
 
 keep_going = True
 
