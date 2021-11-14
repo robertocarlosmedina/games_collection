@@ -104,9 +104,6 @@ class Game_loop:
         )
         [line[i].draw() for line in self.game_cubes  for i in range(4)]
     
-    def draw_game_elements(self) -> None:
-        pass
-    
     def game_events_handler(self, snake_head_rect :pygame.Rect, food_rect :pygame.Rect) -> None:
         pass
 
@@ -114,25 +111,6 @@ class Game_loop:
         self.game_events = game_events
         self.pressed_keys = pygame.key.get_pressed()
         self.draw_game_table_and_cubes()
-        self.draw_game_elements()
-        # self.game_win = self.snake.check_game_end()
-        # food_rect  = self.food.get_food_rect()
-        # snake_head_rect = self.snake.get_snake_head_rect()
-
-        # self.game_events_handler(food_rect, snake_head_rect)
-        # if(not self.snake_is_alive):
-        #     write_from_file("data/end_game_values.txt", "w", 
-        #         f"{self.collected_foods} {self.snake.get_snake_moves()}"
-        #     )
-        #     sleep(2)
-        #     return "game_lost"
-        
-        # if(self.game_win == self.cubo_size * self.cubo_size):
-        #     write_from_file("data/end_game_values.txt", "w", 
-        #         f"{self.collected_foods} {self.snake.get_snake_moves()}"
-        #     )
-        #     sleep(2)
-        #     return "game_won"
         
         for event in game_events:
             if event.type == pygame.KEYDOWN:
