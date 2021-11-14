@@ -73,10 +73,10 @@ class Game_loop:
             self.game_cubes.append(line)
             y += self.cube_sizes["cube_gap"] + self.cube_sizes["heigth"]
         
-        for cubes in self.game_cubes:
-            line = ""
-            for cube in cubes:
-                line += f" {cube.get_cube_value()}"
+        # for cubes in self.game_cubes:
+        #     line = ""
+        #     for cube in cubes:
+        #         line += f" {cube.get_cube_value()}"
 
         #     print(line)
         # self.make_matrix_transpost()
