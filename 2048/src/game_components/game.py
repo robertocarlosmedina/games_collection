@@ -9,96 +9,117 @@ __status__ = "Production"
 """
 
 import pygame
+import numpy as np
+from random import randint
 from time import sleep
 from pygame import font
 from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
-from src.support.auxiliar_functions import display_game_snake_info, \
-            get_screen_text, write_from_file
+from src.game_components.cube import Cube
 
 class Game_loop:
     
-    table_size_position :dict
-    screen_size :tuple
-    screen :pygame.Surface 
-    snake_is_alive :bool
-    game_win :bool
-    snake_step :int
-    collected_foods :int
-    game_events :pygame.event
-    play_algorithm :str
+    screen_size :tuple          # screen size info
+    screen :pygame.Surface      # screen surface
+    game_win :bool              # control if the game was won
+    game_table :list            # store information about the game table
+    game_events :pygame.event   # hold the current games events
+    play_algorithm :str         # hold the current self playing algorithms
+    cube_sizes :dict            # store all the information about the cubes
+    game_cubes :list            # list of objets related to the cubes on th game
 
     def __init__(self, screen :pygame.Surface, screen_size :list, algorithm = None ) -> None:
         self.screen = screen
         self.screen_size = screen_size
         self.play_algorithm = algorithm
-        self.cubo_size = 20
-        self.snake_step = 14
-        self.table_size_position = {"widht": self.snake_step*self.cubo_size, "height": self.snake_step*self.cubo_size}
-        self.table_size_position["x_position"] = int(self.screen_size[0]/2 - self.table_size_position["widht"]/2)
-        self.table_size_position["y_position"] = int(self.screen_size[1]/2 - self.table_size_position["height"]/2)
-        self.collected_foods = 3
-        self.set_up_game_mode()
+        self.game_cubes = []
+        # starting cubes gaps info
+        self.cube_sizes = {"cube_gap": 5}
+        # starting the game table info
+        self.game_table = {"width": 300, "heigth": 300}
+        self.set_up_games_settings()
+        self.start_cubes_display_info()
     
-    def set_up_game_mode(self):
-        pass
+    def set_up_games_settings(self) -> None:
+        # Ajustin the table position info
+        self.game_table["x_position"] = self.screen_size[0]/2 - self.game_table["width"]/2
+        self.game_table["y_position"] = self.screen_size[1]/2 - self.game_table["heigth"]/2
+        # Aujusting the cubes information
+        self.cube_sizes["width"] = self.game_table["width"]/4 - self.cube_sizes["cube_gap"]*1.22
+        self.cube_sizes["heigth"] = self.game_table["heigth"]/4 - self.cube_sizes["cube_gap"]*1.22
+        self.cube_sizes["x_start"] = self.game_table["x_position"] + self.cube_sizes["cube_gap"]
+        self.cube_sizes["y_start"] = self.game_table["y_position"] + self.cube_sizes["cube_gap"]
 
-    def draw_table_lines(self) -> None:
-        y = self.table_size_position["y_position"]
-        for _ in range(int(self.table_size_position["widht"]/self.snake_step) + 1):
-            pygame.draw.line(
-                self.screen, 
-                color.grey1.value,
-                (self.table_size_position["x_position"], y), 
-                (self.table_size_position["x_position"]+self.table_size_position["widht"], y), 
-                2
-            )
-            y += 14
-        x = self.table_size_position["x_position"]
-        for _ in range(int(self.table_size_position["widht"]/self.snake_step) + 1):
-            pygame.draw.line(
-                self.screen, 
-                color.grey1.value,
-                (x, self.table_size_position["y_position"]), 
-                (x, self.table_size_position["y_position"]+self.table_size_position["widht"]), 
-                2
-            )
-            x += 14
+    def start_cubes_display_info(self) -> None:
+        x = self.cube_sizes["x_start"]
+        y = self.cube_sizes["y_start"]
+        starting_position = [(randint(0, 3), randint(0, 3)), (randint(0, 3), randint(0, 3))]
+        for i in range(4):
+            line = []
+            for f in range(4):
+                value = 0
+                if((f, i) in starting_position):
+                    value = 2
+                cube_display_info = {
+                    "x_position": x,
+                    "y_position": y,
+                    "width": self.cube_sizes["width"],
+                    "heigth": self.cube_sizes["heigth"],
+                    "value": value
+                }
+                line.append(Cube(self.screen, self.screen_size, cube_display_info))
+                x += self.cube_sizes["cube_gap"] + self.cube_sizes["width"]
+            x = self.cube_sizes["x_start"]
+            self.game_cubes.append(line)
+            y += self.cube_sizes["cube_gap"] + self.cube_sizes["heigth"]
+        
+        for cubes in self.game_cubes:
+            line = ""
+            for cube in cubes:
+                line += f" {cube.get_cube_value()}"
+
+        #     print(line)
+        # self.make_matrix_transpost()
+        # exit()
     
-    def draw_game_elements(self) -> None:
-        # To draw the table lines
-        self.draw_table_lines()
+    def make_matrix_transpost(self) -> list:
+        return np.transpose(self.game_cubes)
 
-        # game table draw
+        # print("\nmatrix_T")
+        # for cubes in matrix_T:
+        #     line = ""
+        #     for cube in cubes:
+        #         line += f" {cube.get_cube_value()}"
+
+        #     print(line)
+
+
+    def draw_game_table_and_cubes(self) -> None:
         pygame.draw.rect(
             self.screen, 
-            color.white.value, 
-            pygame.Rect(self.table_size_position["x_position"]-2, 
-            self.table_size_position["y_position"]-2, 
-            self.table_size_position["widht"]+5,self.table_size_position["height"]+6 ), 
-            3
+            color.blue.value, 
+            pygame.Rect(self.game_table["x_position"], 
+            self.game_table["y_position"], self.game_table["width"],
+            self.game_table["heigth"] ), 2
         )
-
-        display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_movements"), value = 10, 
-            position = {"x":40, "y":190})
-
-        display_game_snake_info(screen = self.screen, info_name = get_screen_text("data_foods"), value = self.collected_foods, 
-            position = {"x":560, "y":190})
+        [line[i].draw() for line in self.game_cubes  for i in range(4)]
+    
+    def draw_game_elements(self) -> None:
+        pass
     
     def game_events_handler(self, snake_head_rect :pygame.Rect, food_rect :pygame.Rect) -> None:
         pass
 
     def run_link(self, game_events :pygame.event) -> str:
-        food_rect : dict
-        snake_head_rect : dict
         self.game_events = game_events
         self.pressed_keys = pygame.key.get_pressed()
+        self.draw_game_table_and_cubes()
         self.draw_game_elements()
         # self.game_win = self.snake.check_game_end()
         # food_rect  = self.food.get_food_rect()
         # snake_head_rect = self.snake.get_snake_head_rect()
-        # self.game_events_handler(food_rect, snake_head_rect)
 
+        # self.game_events_handler(food_rect, snake_head_rect)
         # if(not self.snake_is_alive):
         #     write_from_file("data/end_game_values.txt", "w", 
         #         f"{self.collected_foods} {self.snake.get_snake_moves()}"
