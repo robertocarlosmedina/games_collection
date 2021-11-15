@@ -40,14 +40,20 @@ class Cube:
             2048: color.green.value
         }
 
-    def update_cube_position(self) -> None:
-        pass
+    def get_cube_info(self) -> dict:
+        return self.cube_display_info
+
+    def update_cube_info(self, new_info) -> dict:
+        self.cube_display_info = new_info
 
     def update_surface_value(self) -> None:
         pass
 
     def get_cube_value(self) -> int:
         return self.cube_display_info["value"]
+    
+    def update_cube_value(self, value) -> int:
+        self.cube_display_info["value"] = value
 
     def update_surface_color(self) -> None:
         [self.cube_surface.fill(col) for key, col in self.surface_colors.items() if key == self.cube_display_info["value"]]

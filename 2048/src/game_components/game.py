@@ -13,6 +13,7 @@ import numpy as np
 from random import randint
 from time import sleep
 from pygame import font
+from pygame.draw import line
 from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
 from src.game_components.cube import Cube
@@ -103,14 +104,60 @@ class Game_loop:
             self.game_table["heigth"] ), 2
         )
         [line[i].draw() for line in self.game_cubes  for i in range(4)]
+
+    def get_starting_cube_object(self):
+        pass
+
+    def pass_position_till_end(self, line_of_cubes, line_index):
+        first = line_of_cubes[0].get_cube_info()
+        for cube in self.game_cubes[line_index][1:len(line_of_cubes)]:
+            print(cube.get_cube_value())
+            new_info = cube.get_cube_info()
+            cube.update_cube_info(first)
+            first = new_info
+        
+        print("\n")
+
+
+    def movin_right(self):
+        for cubes in self.game_cubes:
+            line = ""
+            for cube in cubes:
+                line += f" {cube.get_cube_value()}"
+            print(line)
+        print("\n")
+        
+        i = 0
+        for cubes in self.game_cubes:
+            self.pass_position_till_end(cubes, i)
+            i += 1
+                    
+        for cubes in self.game_cubes:
+            line = ""
+            for cube in cubes:
+                line += f" {cube.get_cube_value()}"
+            print(line)
+            
+        exit()
     
-    def game_events_handler(self, snake_head_rect :pygame.Rect, food_rect :pygame.Rect) -> None:
+    def game_events_handler(self) -> None:
+        for event in self.game_events:
+            if event.type == pygame.KEYDOWN:
+                if pygame.key.get_pressed()[pygame.K_UP]:
+                    exit()
+                elif pygame.key.get_pressed()[pygame.K_DOWN]:
+                    pass
+                elif pygame.key.get_pressed()[pygame.K_RIGHT]:
+                    self.movin_right()
+                elif pygame.key.get_pressed()[pygame.K_LEFT]:
+                    exit()
         pass
 
     def run_link(self, game_events :pygame.event) -> str:
         self.game_events = game_events
         self.pressed_keys = pygame.key.get_pressed()
         self.draw_game_table_and_cubes()
+        self.game_events_handler()
         
         for event in game_events:
             if event.type == pygame.KEYDOWN:
