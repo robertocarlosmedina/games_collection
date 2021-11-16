@@ -54,7 +54,8 @@ class Game_loop:
     def start_cubes_display_info(self) -> None:
         x = self.cube_sizes["x_start"]
         y = self.cube_sizes["y_start"]
-        starting_position = [(randint(0, 3), randint(0, 3)), (randint(0, 3), randint(0, 3))]
+        # starting_position = [(randint(0, 1), randint(0, 1)), (randint(3, 2), randint(0, 3))]
+        starting_position = [(3, 0), (1, 0)]
         for i in range(4):
             line = []
             for f in range(4):
@@ -108,15 +109,43 @@ class Game_loop:
     def get_starting_cube_object(self):
         pass
 
+    def send_elements_to_a_side(self, line_cube :list) -> list:
+        for i in range(len(line_cube)):
+            if line_cube[i] == 0:
+                line_cube.pop(i)
+                line_cube.insert(0, 0)
+        return line_cube
+
     def pass_position_till_end(self, line_of_cubes, line_index):
         first = line_of_cubes[0].get_cube_info()
-        for cube in self.game_cubes[line_index][1:len(line_of_cubes)]:
-            print(cube.get_cube_value())
-            new_info = cube.get_cube_info()
-            cube.update_cube_info(first)
-            first = new_info
-        
+        game_cubes_copy = self.game_cubes[line_index]
+        i = 0
+        # list_cubes_values = [cube.get_cube_value() for cube in game_cubes_copy]
+        list_cubes_values = [32, 0, 0, 32]
+        print(list_cubes_values)
+        for item in list_cubes_values:
+            if item != 0:
+                j = i
+                for cha in list_cubes_values[i+1:len(list_cubes_values)]:
+                    print(list_cubes_values[i:len(list_cubes_values)])
+                    if cha == item:
+                        print(cha, item, sep="    |    ")
+                        list_cubes_values[j+1] = list_cubes_values[i] * 2
+                        list_cubes_values[i] = 0
+                        
+                        print(list_cubes_values)
+                        
+                    if cha != 0:
+                        break
+                    j += 1
+            i+=1
+        set_cube_values = set(list_cubes_values)
+        print(list_cubes_values, set_cube_values, sep="  |  ")
+        list_cubes_values = self.send_elements_to_a_side(list_cubes_values)
+        print(list_cubes_values, set_cube_values, sep="  |  ")
         print("\n")
+        exit()
+        
 
 
     def movin_right(self):
@@ -137,7 +166,7 @@ class Game_loop:
             for cube in cubes:
                 line += f" {cube.get_cube_value()}"
             print(line)
-            
+
         exit()
     
     def game_events_handler(self) -> None:

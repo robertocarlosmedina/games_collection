@@ -60,7 +60,9 @@ class Cube:
 
     def draw(self) -> None:
         self.update_surface_color()
-        cube_value = self.cube_display_info["value"]
+        cube_value = ""
+        if(self.cube_display_info["value"] ):
+            cube_value = self.cube_display_info["value"] 
         font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, f"{cube_value}")
         line = fonts.montserrat_size_22.value.render(f"{cube_value}", True, color.grey.value)
         self.cube_surface.blit(line, (self.cube_display_info["width"]/2 - font_size[0]/2, self.cube_display_info["heigth"]/2 - font_size[1]/2))
