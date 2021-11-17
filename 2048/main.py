@@ -67,7 +67,7 @@ while keep_going:
     screen.fill(color.black.value)
 
     # All the links have a function that will start the instance of 
-    # the page that the user want
+    # the page that the user select on the screen options
     current_link = game_links[current_link](screen, screen_size, game_events)
     
     pygame.display.update()
