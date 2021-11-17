@@ -6,6 +6,8 @@ __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
 """
+    This class represent a cube whitch was a it's value and all
+    information about the itself display on the screen.
 """
 
 import pygame
@@ -22,8 +24,10 @@ class Cube:
         self.screen_size = screen_size
         self.cube_display_info = cube_display_info
         self.cube_surface = pygame.Surface((self.cube_display_info["width"], self.cube_display_info["heigth"]))
+        # Starting methods
         self.construing_sruface_colors()
 
+    # Declaring the default color according to the value
     def construing_sruface_colors(self):
         self.surface_colors = {
             0: color.grey1.value, 
@@ -40,30 +44,32 @@ class Cube:
             2048: color.green.value
         }
 
+    # To get all the cube info
     def get_cube_info(self) -> dict:
         return self.cube_display_info
 
+    # To update the cube info
     def update_cube_info(self, new_info) -> dict:
         self.cube_display_info = new_info
 
-    def update_surface_value(self) -> None:
-        pass
-
+    # To get the cube value
     def get_cube_value(self) -> int:
         return self.cube_display_info["value"]
     
+    # To update the cube value
     def update_cube_value(self, value) -> int:
         self.cube_display_info["value"] = value
 
-    def update_surface_color(self) -> None:
-        [self.cube_surface.fill(col) for key, col in self.surface_colors.items() if key == self.cube_display_info["value"]]
-
+    # To control the cube design on the screen
     def draw(self) -> None:
-        self.update_surface_color()
+        # Update de color according to the cube value
+        self.cube_surface.fill(self.surface_colors[self.cube_display_info["value"]])
         cube_value = ""
-        if(self.cube_display_info["value"] ):
+        # If cubes value == 0, it is not necessary the value display
+        if(self.cube_display_info["value"]):
             cube_value = self.cube_display_info["value"] 
-        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, f"{cube_value}")
-        line = fonts.montserrat_size_22.value.render(f"{cube_value}", True, color.grey.value)
+
+        font_size = pygame.font.Font.size(fonts.montserrat_size_18.value, f"{cube_value}")
+        line = fonts.montserrat_size_18.value.render(f"{cube_value}", True, color.grey.value)
         self.cube_surface.blit(line, (self.cube_display_info["width"]/2 - font_size[0]/2, self.cube_display_info["heigth"]/2 - font_size[1]/2))
         self.screen.blit(self.cube_surface, (self.cube_display_info["x_position"], self.cube_display_info["y_position"]))
