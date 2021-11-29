@@ -20,7 +20,7 @@ screen_texts = {
     "data_movements": "Movements",
     "data_foods": "Points",
     "pause_menu_title":"Pause Menu",
-    "game_mode_choice_text": "Choice your opponent",
+    "game_mode_choice_text": "Choice the game mode",
     "author_text": ['"This project is for educational use, feel free to use', "and share it. And if you find it useful,", "don't forget to support the project by", 'making your contribution."']
 }
 

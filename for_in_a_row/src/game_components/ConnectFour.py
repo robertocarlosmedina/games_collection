@@ -40,7 +40,6 @@ class Game:
         root.mainloop()
 
     def make_move(self):
-        print(self.board)
         if not self.game_over:
             current_player = self.players[self.current_turn]
 

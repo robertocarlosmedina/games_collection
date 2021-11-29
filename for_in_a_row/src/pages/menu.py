@@ -33,6 +33,7 @@ class Game_menu:
         self.screen = screen
         self.screen_size = screen_size
         self.button_clicked = ""
+        self.delay = 0
         self.start_buttons_info()
     
 
@@ -78,9 +79,20 @@ class Game_menu:
             button_clicked = self.button_clicked
         )
 
+    def on_press_delay_control(self) -> bool:
+        if self.delay > 10:
+            return False
+
+        self.delay += 1
+        return True
+
     def run_link(self, game_events :pygame.event) -> str:
         del game_events
         self.mouse_pos = pygame.mouse.get_pos()
+        if self.on_press_delay_control():
+            self.button_clicked = ""
+            self.game_play_buttons()
+            return "game_menu"
 
         font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, get_screen_text("game_tittle"))
         line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.white.value)
