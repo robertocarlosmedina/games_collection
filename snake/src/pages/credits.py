@@ -6,6 +6,7 @@ __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
 """
+    This is the page of the game credits.
 """
 
 import pygame
@@ -17,20 +18,17 @@ from src.support.auxiliar_functions import draw_header_styled_lines, get_screen_
 
 class Game_Credits:
 
-    screen :pygame.Surface
-    screen_size :tuple
-    game_buttons :list
-    button_clicked :str
-    mouse_position :tuple
-    menu_tittles :dict
-    menus_start_positions :dict
-    buttons_size :dict
+    page_buttons :list              # To store all the page buttons
+    button_clicked :str             # The value of the current button clicked
+    mouse_position :tuple           # Store the mouse position
+    menus_start_positions :dict     # Store and control the menus positions
+    buttons_size :dict              # Store the width and the heigth of the buttons
 
     def __init__(self, screen, screen_size) -> None:
         self.screen = screen
         self.screen_size = screen_size
         self.button_clicked = ""
-        self.game_buttons = {
+        self.page_buttons = {
             "game_menu": "Back",
         }
         self.buttons_size = {
@@ -86,7 +84,7 @@ class Game_Credits:
 
         self.button_clicked = verticalButtonsDisplay(
             screen = self.screen,
-            buttons = self.game_buttons.values(),
+            buttons = self.page_buttons.values(),
             start_position = {
                 "x":self.menus_start_positions["game_menu"]["x"],
                 "y":self.menus_start_positions["game_menu"]["y"]+180
@@ -98,7 +96,7 @@ class Game_Credits:
         )
         
         if (self.button_clicked != "" ):
-            for key,value in self.game_buttons.items():
+            for key,value in self.page_buttons.items():
                 if(self.button_clicked == value):
                     self.button_clicked = ""
                     return key

@@ -62,7 +62,7 @@ while keep_going:
     if(current_link != "game_self_play_hamiltoniano"):
         clock.tick(30)
     else:
-        clock.tick(160)
+        clock.tick(200)
 
     screen.fill(color.black.value)
 
