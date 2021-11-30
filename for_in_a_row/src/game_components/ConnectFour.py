@@ -46,9 +46,9 @@ class Game:
             if current_player.type == 'ai':
                 
                 if self.players[int(not self.current_turn)].type == 'random':
-                    p_func = current_player.get_expectimax_move
+                    p_func = current_player.get_expectimax_move(self.board)
                 else:
-                    p_func = current_player.get_alpha_beta_move
+                    p_func = current_player.get_alpha_beta_move(self.board)
                 
                 try:
                     recv_end, send_end = mp.Pipe(False)
@@ -63,7 +63,7 @@ class Game:
                     print(e)
                     raise Exception('Game Over')
 
-                move = recv_end.recv()
+                move = p_func
             else:
                 move = current_player.get_move(self.board)
 

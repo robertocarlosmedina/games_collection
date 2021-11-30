@@ -76,7 +76,6 @@ class Game_mode:
     def on_press_delay_control(self) -> bool:
         if self.delay > 10:
             return False
-
         self.delay += 1
         return True
 
@@ -107,7 +106,8 @@ class Game_mode:
 
                     if(self.on_game_play):
                         go_to = self.game_object.run_link(game_events)
-                        if (go_to == "game_won"):
+                        if (go_to == "game_over"):
+                            sleep(1)
                             return go_to      
         
         return "game_chose_mode"
