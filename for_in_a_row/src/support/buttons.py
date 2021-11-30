@@ -34,7 +34,7 @@ def verticalButtonsDisplay(screen :pygame.Surface, buttons :list, start_position
 
         else:
             pygame.draw.rect(screen, color.blue.value, button_box, 2, 20)
-            line = font.render(button, True, color.blue_1.value)
+            line = font.render(button, True, color.blue.value)
         
         if button_clicked == button:
             pygame.draw.rect(screen, color.green.value, button_box, border_radius = 10)
@@ -71,7 +71,7 @@ def horizontalButtonDisplay(screen :pygame.Surface, buttons :list, start_positio
 
         else:
             pygame.draw.rect(screen, color.blue.value, button_box, 2, 20)
-            line = font.render(button, True, color.blue_1.value)
+            line = font.render(button, True, color.blue.value)
         
         if button_clicked == button:
             pygame.draw.rect(screen, color.green.value, button_box, border_radius = 20)

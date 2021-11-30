@@ -9,14 +9,14 @@ __status__ = "Production"
 """
 
 import pygame
-from pygame.constants import NOEVENT
+import os
 from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
 from src.support.buttons import verticalButtonsDisplay
 from src.support.auxiliar_functions import draw_header_styled_lines, \
-    display_game_snake_info, read_from_file, get_screen_text
+    display_game_result_info, read_from_file, get_screen_text, display_game_result_winning_color_info
 
-class Game_Lost:
+class Game_over:
 
     screen :pygame.Surface
     screen_size :tuple
@@ -38,6 +38,7 @@ class Game_Lost:
             "game_menu": "Main Menu",
             "game_quit":"Quit"
         }
+
         self.buttons_size = {
             "x":220,
             "y":50
@@ -49,10 +50,9 @@ class Game_Lost:
             }
         }
     
-    def pause_menu_buttons(self) -> None:
-
-        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_lost_text"))
-        line = fonts.montserrat_size_22.value.render(get_screen_text("game_lost_text"), True, color.red.value)
+    def menu_buttons(self) -> None:
+        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_result_text"))
+        line = fonts.montserrat_size_22.value.render(get_screen_text("game_result_text"), True, color.green_1.value)
         self.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
@@ -82,13 +82,13 @@ class Game_Lost:
 
         draw_header_styled_lines(self.screen, self.screen_size)
 
-        display_game_snake_info(screen = self.screen, info_name = "Foods", value = self.game_data[0], 
+        display_game_result_winning_color_info(screen = self.screen, info_name = "Winner", value = self.game_data[0], 
             position = {"x":self.menus_start_positions["game_menu"]["x"] + 250, "y":225})
 
-        display_game_snake_info(screen = self.screen, info_name = "Movements", value = self.game_data[1], 
+        display_game_result_info(screen = self.screen, info_name = "Type", value = self.game_data[1], 
             position = {"x":self.menus_start_positions["game_menu"]["x"] - 130, "y":225})
 
-        self.pause_menu_buttons()
+        self.menu_buttons()
         
         if (self.button_clicked != "" ):
             for key,value in self.game_buttons.items():
@@ -96,5 +96,5 @@ class Game_Lost:
                     self.button_clicked = ""
                     return key
         
-        return "game_lost"
+        return "game_over"
         

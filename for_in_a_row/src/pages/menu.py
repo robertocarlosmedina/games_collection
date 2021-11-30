@@ -16,7 +16,7 @@ from pygame.constants import NOEVENT
 from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
 from src.support.buttons import verticalButtonsDisplay
-from src.support.auxiliar_functions import draw_vertical_styled_lines, get_screen_text
+from src.support.auxiliar_functions import draw_header_styled_lines, get_screen_text
 
 class Game_menu:
 
@@ -33,6 +33,7 @@ class Game_menu:
         self.screen = screen
         self.screen_size = screen_size
         self.button_clicked = ""
+        self.delay = 0
         self.start_buttons_info()
     
 
@@ -78,17 +79,28 @@ class Game_menu:
             button_clicked = self.button_clicked
         )
 
+    def on_press_delay_control(self) -> bool:
+        if self.delay > 10:
+            return False
+
+        self.delay += 1
+        return True
+
     def run_link(self, game_events :pygame.event) -> str:
         del game_events
         self.mouse_pos = pygame.mouse.get_pos()
+        
 
         font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, get_screen_text("game_tittle"))
         line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.white.value)
         self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), 25))
-
+        draw_header_styled_lines(self.screen, self.screen_size)
         self.game_play_buttons()
         
-
+        if self.on_press_delay_control():
+            self.button_clicked = ""
+            return "game_menu"
+            
         if (self.button_clicked != "" ):
             for key,value in self.game_buttons.items():
                 if(self.button_clicked == value):

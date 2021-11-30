@@ -38,7 +38,8 @@ class Game_mode:
         self.game_buttons = {
             "human_player": "Human player", 
             "random_player":"Random player",
-            "ai_player":"AI player"
+            "ai_player":"AI player",
+            "ai_vs_ai": "AI vs AI"
         }
         self.buttons_size = {
             "x":220,
@@ -75,7 +76,6 @@ class Game_mode:
     def on_press_delay_control(self) -> bool:
         if self.delay > 10:
             return False
-
         self.delay += 1
         return True
 
@@ -101,12 +101,13 @@ class Game_mode:
             for key,value in self.game_buttons.items():
                 if(self.button_clicked == value):
                     if(not self.on_game_play):
-                        self.game_object = Game_loop(screen = self.screen, screen_size = self.screen_size, algorithm = key)
+                        self.game_object = Game_loop(screen = self.screen, screen_size = self.screen_size, game_mode = key)
                         self.on_game_play = True
 
                     if(self.on_game_play):
                         go_to = self.game_object.run_link(game_events)
-                        if (go_to == "game_won"):
+                        if (go_to == "game_over"):
+                            sleep(1)
                             return go_to      
         
         return "game_chose_mode"

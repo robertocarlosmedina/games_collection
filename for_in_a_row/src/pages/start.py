@@ -5,7 +5,7 @@ __maintainer__ = "Roberto Medina"
 __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 __file__ = "start.py"
-__path__ = "https://github.com/robertocarlosmedina/AI_games/tree/main/snake"
+__path__ = "https://github.com/robertocarlosmedina/AI_games"
 
 """
 """
@@ -28,7 +28,7 @@ class Game_start:
     def draw_screen_text(self) -> None:
         # drawing tittle
         size = pygame.font.Font.size(self.font, get_screen_text("game_tittle"))
-        line = self.font.render(get_screen_text("game_tittle"), True, color.green.value)
+        line = self.font.render(get_screen_text("game_tittle"), True, color.blue.value)
         self.screen.blit(line, (self.screen_size[0]/2-size[0]/2, (self.screen_size[1]/2-size[1]/2)-40))
         # drawing sub tittle
         size = pygame.font.Font.size(self.font1, get_screen_text("game_subtittle"))

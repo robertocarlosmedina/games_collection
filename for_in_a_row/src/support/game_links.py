@@ -10,8 +10,7 @@ __status__ = "Production"
 
 import pygame
 from src.pages.pause_menu import Game_Pause_Menu
-from src.pages.game_lost import Game_Lost
-from src.pages.game_won import Game_won
+from src.pages.game_over import Game_over
 from src.game_components.game import Game_loop
 from src.pages.start import Game_start
 from src.pages.menu import Game_menu
@@ -43,7 +42,7 @@ class Game_links:
             self.game_page_object = self.game_backup
         
         if(not isinstance(self.game_page_object, Game_loop)):
-            self.game_page_object = Game_loop(screen, screen_size)
+            self.game_page_object = Game_mode(screen, screen_size)
 
         return  self.game_page_object.run_link(game_event)
 
@@ -73,16 +72,10 @@ class Game_links:
             self.game_page_object = Game_Pause_Menu(screen, screen_size)
         return  self.game_page_object.run_link(game_event)
 
-    def game_won(self, screen :pygame.Surface, screen_size :tuple, game_event :pygame.event) -> str:
-        if(not isinstance(self.game_page_object, Game_won)):
+    def game_over(self, screen :pygame.Surface, screen_size :tuple, game_event :pygame.event) -> str:
+        if(not isinstance(self.game_page_object, Game_over)):
             self.game_backup = object
-            self.game_page_object = Game_won(screen, screen_size)
-        return  self.game_page_object.run_link(game_event)
-
-    def game_lost(self, screen :pygame.Surface, screen_size :tuple, game_event :pygame.event) -> str:
-        if(not isinstance(self.game_page_object, Game_Lost)):
-            self.game_backup = object
-            self.game_page_object = Game_Lost(screen, screen_size)
+            self.game_page_object = Game_over(screen, screen_size)
         return  self.game_page_object.run_link(game_event)
     
     def chose_game_mode(self, screen :pygame.Surface, screen_size :tuple, game_event :pygame.event) -> str:

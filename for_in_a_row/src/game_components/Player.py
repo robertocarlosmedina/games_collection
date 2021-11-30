@@ -315,6 +315,12 @@ class AIPlayer:
 
         return utility
 
+    def get_move(self, expectimax_type = None, board = None, drawable_function = None):
+        if expectimax_type == "alpha_prunning":
+            return self.get_alpha_beta_move(board)
+        else:
+            return self.get_expectimax_move(board)
+
 
 class RandomPlayer:
     def __init__(self, player_number):
@@ -322,7 +328,7 @@ class RandomPlayer:
         self.type = 'random'
         self.player_string = 'Player {}:random'.format(player_number)
 
-    def get_move(self, board):
+    def get_move(self, expectimax_type = None, board = None, drawable_function = None):
         """
         Given the current board state select a random column from the available
         valid moves.
@@ -354,7 +360,7 @@ class HumanPlayer:
         self.type = 'human'
         self.player_string = 'Player {}:human'.format(player_number)
 
-    def get_move(self, board):
+    def get_move(self, expectimax_type = None, board = None, drawable_function = None):
         """
         Given the current board state returns the human input for next move
 
@@ -371,17 +377,5 @@ class HumanPlayer:
         RETURNS:
         The 0 based index of the column that represents the next move
         """
-
-        valid_cols = []
-        for i, col in enumerate(board.T):
-            if 0 in col:
-                valid_cols.append(i)
-
-        move = int(input('Enter your move: '))
-
-        while move not in valid_cols:
-            print('Column full, choose from:{}'.format(valid_cols))
-            move = int(input('Enter your move: '))
-
-        return move
+        return drawable_function()
 

@@ -9,6 +9,7 @@ __status__ = "Production"
 """
 
 import pygame
+from src.support.auxiliar_functions import get_screen_text
 from src.support.game_links import Game_links as Link
 from src.support.colors import Game_color as color
 
@@ -24,7 +25,7 @@ clock :pygame.time
 
 screen_size = (700, 500)
 screen = pygame.display.set_mode(screen_size)
-pygame.display.set_caption('Snake')
+pygame.display.set_caption(get_screen_text("game_tittle"))
 
 links = Link()
 
@@ -37,13 +38,12 @@ game_links = {
     "game_credits": links.game_credits,
     "game_continue": links.continue_game,
     "game_pause_menu": links.game_pause_menu,
-    "game_lost": links.game_lost,
-    "game_won": links.game_won,
+    "game_over": links.game_over,
     "game_chose_mode": links.chose_game_mode
 }
 
 game_events = None
-current_link = "game_loop"
+current_link = "game_start"
 
 keep_going = True
 
@@ -58,11 +58,10 @@ while keep_going:
         elif event.type == pygame.KEYDOWN:
             if pygame.key.get_pressed()[pygame.K_KP_ENTER]:
                 exit()
+            elif pygame.key.get_pressed()[pygame.K_ESCAPE] and current_link == "game_chose_mode":
+                current_link = "game_pause_menu"
 
-    if(current_link != "game_self_play_hamiltoniano"):
-        clock.tick(30)
-    else:
-        clock.tick(160)
+    clock.tick(30)
 
     screen.fill(color.black.value)
 
