@@ -19,6 +19,7 @@ from src.support.colors import Game_color as color
 from src.game_components.tic_tac_toe import Tic_Tac_Toe as TTT
 from src.game_components.minimax import movimentoIA
 from src.support.auxiliar_functions import write_from_file
+from src.game_components.animated_play import Scale_animtion
 
 class Game_loop:
     
@@ -31,6 +32,7 @@ class Game_loop:
     nr_cubes: int               # to declare the number of cubes for the game
     players: list               # to store the configuration of the player 1
     current_player: bool        # current player to play
+    
 
     def __init__(self, screen: pygame.Surface, screen_size: list, game_mode = None ) -> None:
         self.screen = screen
@@ -44,12 +46,16 @@ class Game_loop:
         self.block_size = 100
         self.mouse_position = None
         self.current_player = int(True)
+        self.car_board_pos = []
         # starting the game table info
         self.game_table = {"width": 320, "heigth": 320}
         self.game_table["x_position"] = self.screen_size[0]/2 - self.game_table["width"]/2
         self.game_table["y_position"] = self.screen_size[1]/2 - self.game_table["heigth"]/2 + 30
         # starting methods
         self.initializing_game_mode(game_mode)
+        self.make_car_pos()
+        # Animation
+        self.animation = None
 
     def initializing_game_mode(self, game_mode: str) -> None:
         game_mode = "human_player"
@@ -85,6 +91,18 @@ class Game_loop:
 
         return " "
     
+    def make_car_pos(self):
+        x = self.game_table["x_position"] + 9
+        y = self.game_table["y_position"] + 9
+        for line in self.ttt.get_board():
+            line_board_pos = []
+            for _ in line:
+                line_board_pos.append((x, y))
+                x += 2 + self.block_size
+            self.car_board_pos.append(line_board_pos)
+            x = self.game_table["x_position"] + 9
+            y += self.block_size + 2
+
     def draw_rows(self) -> None:
         x = self.game_table["x_position"] + 9
         y = self.game_table["y_position"] + 9
@@ -108,41 +126,40 @@ class Game_loop:
             x = self.game_table["x_position"] + 9
             y += self.block_size + 2
 
-    def get_start_end_animation_position(self, play_position: int) -> int:
-
-        start_position = [
-            self.game_table["x_position"] + 9,
-            self.game_table["y_position"] - 50 
-        ]
-        end_position = [(self.game_table["x_position"] + 9) * (play_position[1] + 1), (self.game_table["y_position"] + 9) * (play_position[1] + 1)]
-        return start_position, end_position
-
-    def play_animation(self, play_pos) -> None:
-        print(self.get_start_end_animation_position(play_pos))
-        pass 
-
     def game_over(self, winner) -> Literal["game_over"]:
         write_from_file("./data/end_game_values.txt", "w",\
              f"{winner} {self.get_img_url(winner, 0)}")
         return "game_over"
+
+    def play_animation(self, play_pos: list) -> None:
+        img_size = [20, 20]
+        display_surface = pygame.Surface((self.block_size, self.block_size))
+        sur_pos = self.car_board_pos[play_pos[0]][play_pos[1]]
                 
     # To run this page on the game
     def run_link(self, game_events :pygame.event) -> str:
         self.mouse_position = pygame.mouse.get_pos()
         self.draw_game_board()
+        self.draw_rows()
 
         play_x, play_y = self.players[int(self.current_player)](self.ttt.get_board(), int(self.current_player),  \
             self.ttt.verificaGanhador, [self.game_table["x_position"], self.game_table["y_position"], self.block_size])
         if play_x != None:
             if(self.ttt.verificaMovimento(play_x, play_y)):
+                scalling_animation = Scale_animtion(
+                    self.screen, 
+                    self.car_board_pos[play_y][play_x],
+                    self.block_size, 
+                    self.get_img_url(self.ttt.get_board()[play_x][play_y], 0)
+                )
+                scalling_animation.draw(self.draw_game_board, self.draw_rows)
                 self.play_animation([play_x, play_y])
                 self.ttt.fazMovimento(play_x, play_y, int(self.current_player))
                 self.current_player = not self.current_player
             
-        self.draw_rows()
+        
 
         if self.ttt.verificaGanhador():
-            sleep(2)
             return self.game_over(self.ttt.verificaGanhador())
         
         return "game_loop"
