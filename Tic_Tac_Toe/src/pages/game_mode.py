@@ -37,7 +37,7 @@ class Game_mode:
         self.delay = 0
         self.game_buttons = {
             "human_player": "Human player", 
-            "random_player":"AI player",
+            "ai_player":"AI player",
             "ai_vs_ai": "AI vs AI"
         }
         self.buttons_size = {

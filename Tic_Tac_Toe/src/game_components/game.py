@@ -55,10 +55,10 @@ class Game_loop:
         self.initializing_game_mode(game_mode)
         self.make_car_pos()
         # Animation
-        self.animation = None
+        self.scalling_animation = None
 
     def initializing_game_mode(self, game_mode: str) -> None:
-        game_mode = "human_player"
+        # game_mode = "human_player"
         if game_mode == "human_player": 
              self.players = [self.ttt.getInputValido, self.ttt.getInputValido]
         elif game_mode == "ai_player":
@@ -102,7 +102,7 @@ class Game_loop:
             self.car_board_pos.append(line_board_pos)
             x = self.game_table["x_position"] + 9
             y += self.block_size + 2
-
+        
     def draw_rows(self) -> None:
         x = self.game_table["x_position"] + 9
         y = self.game_table["y_position"] + 9
@@ -129,37 +129,35 @@ class Game_loop:
     def game_over(self, winner) -> Literal["game_over"]:
         write_from_file("./data/end_game_values.txt", "w",\
              f"{winner} {self.get_img_url(winner, 0)}")
+        print(f"{winner} {self.get_img_url(winner, 0)}")
         return "game_over"
 
-    def play_animation(self, play_pos: list) -> None:
-        img_size = [20, 20]
-        display_surface = pygame.Surface((self.block_size, self.block_size))
-        sur_pos = self.car_board_pos[play_pos[0]][play_pos[1]]
-                
-    # To run this page on the game
-    def run_link(self, game_events :pygame.event) -> str:
-        self.mouse_position = pygame.mouse.get_pos()
-        self.draw_game_board()
-        self.draw_rows()
-
+    def get_player_move(self) -> None:
         play_x, play_y = self.players[int(self.current_player)](self.ttt.get_board(), int(self.current_player),  \
             self.ttt.verificaGanhador, [self.game_table["x_position"], self.game_table["y_position"], self.block_size])
         if play_x != None:
             if(self.ttt.verificaMovimento(play_x, play_y)):
-                scalling_animation = Scale_animtion(
+                self.scalling_animation = Scale_animtion(
                     self.screen, 
-                    self.car_board_pos[play_y][play_x],
+                    self.car_board_pos[play_x][play_y],
                     self.block_size, 
-                    self.get_img_url(self.ttt.get_board()[play_x][play_y], 0)
+                    self.get_img_url(self.ttt.token[int(self.current_player)], 0)
                 )
-                scalling_animation.draw(self.draw_game_board, self.draw_rows)
-                self.play_animation([play_x, play_y])
+                self.scalling_animation.draw(self.draw_game_board, self.draw_rows)
                 self.ttt.fazMovimento(play_x, play_y, int(self.current_player))
                 self.current_player = not self.current_player
-            
-        
+                
+    # To run this page on the game
+    def run_link(self, game_events :pygame.event) -> str:
+        del game_events
+        self.mouse_position = pygame.mouse.get_pos()
+        self.draw_game_board()
+        self.draw_rows()
+
+        self.get_player_move()
 
         if self.ttt.verificaGanhador():
+            sleep(2)
             return self.game_over(self.ttt.verificaGanhador())
         
         return "game_loop"

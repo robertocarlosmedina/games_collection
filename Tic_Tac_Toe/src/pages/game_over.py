@@ -33,6 +33,7 @@ class Game_over:
         self.screen_size = screen_size
         self.button_clicked = ""
         self.game_data = read_from_file("data/end_game_values.txt", "r", True)[0].split(" ")
+        print(self.game_data)
         self.game_buttons = {
             "game_loop": "New Game",
             "game_menu": "Main Menu",

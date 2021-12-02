@@ -29,11 +29,11 @@ def verticalButtonsDisplay(screen :pygame.Surface, buttons :list, start_position
         # hover button effect
         if mouse_pos[0] in range(start_position["x"], start_position["x"]+box_dim["x"]) and \
            mouse_pos[1] in range(start_position["y"], start_position["y"]+box_dim["y"]):
-            pygame.draw.rect(screen, color.grey.value, button_box, border_radius = 20)
+            pygame.draw.rect(screen, color.grey.value, button_box, border_radius = 10)
             line = font.render(button, True, color.white.value)
 
         else:
-            pygame.draw.rect(screen, color.blue.value, button_box, 2, 20)
+            pygame.draw.rect(screen, color.blue.value, button_box, 2, 10)
             line = font.render(button, True, color.blue.value)
         
         if button_clicked == button:
@@ -66,15 +66,15 @@ def horizontalButtonDisplay(screen :pygame.Surface, buttons :list, start_positio
         # hover button effect
         if mouse_pos[0] in range(start_position["x"], start_position["x"]+box_dim["x"]) and \
            mouse_pos[1] in range(start_position["y"], start_position["y"]+box_dim["y"]):
-            pygame.draw.rect(screen, color.grey.value, button_box, border_radius = 20)
+            pygame.draw.rect(screen, color.grey.value, button_box, border_radius = 10)
             line = font.render(button, True, color.white.value)
 
         else:
-            pygame.draw.rect(screen, color.blue.value, button_box, 2, 20)
+            pygame.draw.rect(screen, color.blue.value, button_box, 2, 10)
             line = font.render(button, True, color.blue.value)
         
         if button_clicked == button:
-            pygame.draw.rect(screen, color.green.value, button_box, border_radius = 20)
+            pygame.draw.rect(screen, color.green.value, button_box, border_radius = 10)
             line = font.render(button, True, color.black.value)
 
         screen.blit(
@@ -82,7 +82,7 @@ def horizontalButtonDisplay(screen :pygame.Surface, buttons :list, start_positio
             (start_position["x"]-(font_size[0]/2)+(box_dim["x"]/2),
                 start_position["y"]-(font_size[1]/2)+(box_dim["y"]/2))
         )
-        start_position["x"] += (box_dim["x"] + 20)
+        start_position["x"] += (box_dim["x"] + 10)
 
     return button_clicked
     

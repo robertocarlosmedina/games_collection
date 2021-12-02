@@ -45,7 +45,7 @@ game_links = {
 }
 
 game_events = None
-current_link = "game_loop"
+current_link = "game_menu"
 
 keep_going = True
 
