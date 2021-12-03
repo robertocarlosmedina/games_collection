@@ -14,7 +14,7 @@ from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
 from src.support.buttons import verticalButtonsDisplay
 from src.support.auxiliar_functions import draw_header_styled_lines, \
-    display_game_result_info, read_from_file, get_screen_text, display_game_result_winning_color_info
+    read_from_file, get_screen_text
 
 class Game_over:
 
