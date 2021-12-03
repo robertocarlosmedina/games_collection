@@ -9,18 +9,19 @@ screen_texts :dict
 
 surface = pygame.Surface((100, 100))
 screen_texts = {
-    "game_tittle": "4 in a row",
+    "game_tittle": "Tic Tac Toe",
     "game_subtittle": "Case study",
     "game_main_menu_text": "Game Menu",
     "self_play_menu_text": "Play game",
     "game_result_text": "Game Result",
-    "game_lost_text": "You Lost !!",
+    "game_lost_text": "Loser",
+    "game_win_text": "Winner",
     "game_credits_tittle": "Game credits",
     "game_quit_text": "Do you really want to finish the game?",
     "data_movements": "Movements",
     "data_foods": "Points",
     "pause_menu_title":"Pause Menu",
-    "game_mode_choice_text": "Choice the game mode",
+    "game_mode_choice_text": "Chose game mode",
     "author_text": ['"This project is for educational use, feel free to use', "and share it. And if you find it useful,", "don't forget to support the project by", 'making your contribution."']
 }
 

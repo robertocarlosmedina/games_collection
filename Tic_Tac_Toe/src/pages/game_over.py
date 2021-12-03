@@ -32,8 +32,8 @@ class Game_over:
         self.screen = screen
         self.screen_size = screen_size
         self.button_clicked = ""
+        self.y_pos = 225
         self.game_data = read_from_file("data/end_game_values.txt", "r", True)[0].split(" ")
-        print(self.game_data)
         self.game_buttons = {
             "game_loop": "New Game",
             "game_menu": "Main Menu",
@@ -53,7 +53,7 @@ class Game_over:
     
     def menu_buttons(self) -> None:
         font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_result_text"))
-        line = fonts.montserrat_size_22.value.render(get_screen_text("game_result_text"), True, color.green_1.value)
+        line = fonts.montserrat_size_22.value.render(get_screen_text("game_result_text"), True, color.white_1.value)
         self.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
@@ -72,18 +72,31 @@ class Game_over:
             font = fonts.montserrat_size_16.value,
             button_clicked = self.button_clicked
         )
+    
+    def draw_game_results(self) -> None:
 
+        # Winner display
+        self.screen.blit(pygame.image.load(self.game_data[1]), (120, self.y_pos))
+        line = fonts.montserrat_size_18.value.render(get_screen_text("game_win_text"), True, color.green.value)
+        self.screen.blit(line, (120, self.y_pos + 55))
+
+        # Loser Display
+        self.screen.blit(pygame.image.load(self.game_data[3]), (510, self.y_pos))
+        line = fonts.montserrat_size_18.value.render(get_screen_text("game_lost_text"), True, color.red.value)
+        self.screen.blit(line, (519, self.y_pos + 55))
+        
     def run_link(self, game_events :pygame.event) -> str:
         del game_events
         self.mouse_pos = pygame.mouse.get_pos()
 
         font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, get_screen_text("game_tittle"))
-        line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.white.value)
+        line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.red_2.value)
         self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), 25))
 
         draw_header_styled_lines(self.screen, self.screen_size)
 
         self.menu_buttons()
+        self.draw_game_results()
         
         if (self.button_clicked != "" ):
             for key,value in self.game_buttons.items():

@@ -12,7 +12,6 @@ __status__ = "Production"
 
 from typing import Literal
 import pygame
-import numpy as np
 from time import sleep
 from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
@@ -118,7 +117,7 @@ class Game_loop:
                     line = fonts.montserrat_size_30.value.render(col, True, color.white.value)
 
                     display_surface.blit(line, (self.block_size/2 - (font_size[0]/2), self.block_size/2 - (font_size[1]/2)))
-                    display_surface.fill(color.grey1.value)
+                    display_surface.fill(color.grey_1.value)
 
                 self.screen.blit(display_surface, (x, y))
 
@@ -128,9 +127,9 @@ class Game_loop:
 
     def game_over(self, winner) -> Literal["game_over"]:
         write_from_file("./data/end_game_values.txt", "w",\
-             f"Winner {self.get_img_url(self.ttt.token[int(not self.current_player)], 0)} Loser {self.get_img_url(self.ttt.token[int(self.current_player)], 0)}")  \
+             f"Winner {self.get_img_url(self.ttt.token[int(not self.current_player)], 1)} Loser {self.get_img_url(self.ttt.token[int(self.current_player)], 1)}")  \
                  if winner != "EMPATE" else write_from_file("./data/end_game_values.txt", "w",\
-                      f"Winner {self.get_img_url(self.ttt.token[int(not self.current_player)], 0)} Winner {self.get_img_url(self.ttt.token[int(self.current_player)], 0)}")
+                      f"Winner {self.get_img_url(self.ttt.token[int(not self.current_player)], 1)} Winner {self.get_img_url(self.ttt.token[int(self.current_player)], 1)}")
         
         return "game_over"
 
@@ -145,9 +144,9 @@ class Game_loop:
                     self.block_size, 
                     self.get_img_url(self.ttt.token[int(self.current_player)], 0)
                 )
-                self.current_player = not self.current_player
                 self.scalling_animation.draw(self.draw_game_board, self.draw_rows)
                 self.ttt.fazMovimento(play_x, play_y, int(self.current_player))
+                self.current_player = not self.current_player
                 
     # To run this page on the game
     def run_link(self, game_events :pygame.event) -> str:
@@ -157,7 +156,6 @@ class Game_loop:
         self.draw_rows()
 
         self.get_player_move()
-        print(self.ttt.token[int(self.current_player)])
 
         if self.ttt.verificaGanhador():
             sleep(2)

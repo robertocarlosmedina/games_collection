@@ -56,7 +56,7 @@ class Game_Credits:
         draw_header_styled_lines(self.screen, self.screen_size)
 
         font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, f"Game made by {__author__}")
-        line = fonts.montserrat_size_22.value.render(f"Game made by {__author__}", True, color.white.value)
+        line = fonts.montserrat_size_22.value.render(f"Game made by {__author__}", True, color.white_1.value)
         self.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
@@ -66,7 +66,7 @@ class Game_Credits:
         y = font_size[1] + 20
         for text in get_screen_text("author_text"):
             font_size = pygame.font.Font.size(fonts.montserrat_size_16.value, text)
-            line = fonts.montserrat_size_16.value.render(text, True, color.white1.value)
+            line = fonts.montserrat_size_16.value.render(text, True, color.white_1.value)
             self.screen.blit(
                 line, 
                 (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),

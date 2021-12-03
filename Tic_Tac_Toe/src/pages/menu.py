@@ -59,7 +59,7 @@ class Game_menu:
     def game_play_buttons(self) -> None:
 
         font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_main_menu_text"))
-        line = fonts.montserrat_size_22.value.render(get_screen_text("game_main_menu_text"), True, color.green_1.value)
+        line = fonts.montserrat_size_22.value.render(get_screen_text("game_main_menu_text"), True, color.white_1.value)
         self.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
@@ -92,7 +92,7 @@ class Game_menu:
         
 
         font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, get_screen_text("game_tittle"))
-        line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.white.value)
+        line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.red_2.value)
         self.screen.blit(line, (self.screen_size[0]/2-(font_size[0]/2), 25))
         draw_header_styled_lines(self.screen, self.screen_size)
         self.game_play_buttons()
