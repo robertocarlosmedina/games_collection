@@ -17,8 +17,7 @@ class AIPlayer:
         board - a numpy array containing the state of the board using the
                 following encoding:
                 - the board maintains its same two dimensions
-                    - row 0 is the top of the board and so is
-                      the last row filled
+                - row 0 is the top of the board and so is the last row filled
                 - spaces that are unoccupied are marked as 0
                 - spaces that are occupied by player 1 have a 1 in them
                 - spaces that are occupied by player 2 have a 2 in them
@@ -103,8 +102,7 @@ class AIPlayer:
         board - a numpy array containing the state of the board using the
                 following encoding:
                 - the board maintains its same two dimensions
-                    - row 0 is the top of the board and so is
-                      the last row filled
+                - row 0 is the top of the board and so is the last row filled
                 - spaces that are unoccupied are marked as 0
                 - spaces that are occupied by player 1 have a 1 in them
                 - spaces that are occupied by player 2 have a 2 in them
@@ -199,8 +197,7 @@ class AIPlayer:
         board - a numpy array containing the state of the board using the
                 following encoding:
                 - the board maintains its same two dimensions
-                    - row 0 is the top of the board and so is
-                      the last row filled
+                - row 0 is the top of the board and so is the last row filled
                 - spaces that are unoccupied are marked as 0
                 - spaces that are occupied by player 1 have a 1 in them
                 - spaces that are occupied by player 2 have a 2 in them
@@ -337,8 +334,7 @@ class RandomPlayer:
         board - a numpy array containing the state of the board using the
                 following encoding:
                 - the board maintains its same two dimensions
-                    - row 0 is the top of the board and so is
-                      the last row filled
+                - row 0 is the top of the board and so is the last row filled
                 - spaces that are unoccupied are marked as 0
                 - spaces that are occupied by player 1 have a 1 in them
                 - spaces that are occupied by player 2 have a 2 in them
@@ -368,8 +364,7 @@ class HumanPlayer:
         board - a numpy array containing the state of the board using the
                 following encoding:
                 - the board maintains its same two dimensions
-                    - row 0 is the top of the board and so is
-                      the last row filled
+                - row 0 is the top of the board and so is the last row filled
                 - spaces that are unoccupied are marked as 0
                 - spaces that are occupied by player 1 have a 1 in them
                 - spaces that are occupied by player 2 have a 2 in them

@@ -56,6 +56,7 @@ class Game_loop:
         self.end_falling_effect = False
         self.start_position, self.end_position = None, None
         self.falling_obj = None
+        self.algorithms = ""
         # starting methods
         self.initializing_game_mode(game_mode)
         self.make_arrows()
@@ -76,6 +77,11 @@ class Game_loop:
             self.players = [HumanPlayer(1), AIPlayer(2)]
         else:
             self.players = [AIPlayer(1), AIPlayer(2)]
+            if game_mode == "ai_vs_ai_exp":
+                self.algorithms = "expectimax"
+            else:
+                self.algorithms = "alpha_prunning"
+
 
     def draw_game_board(self) -> None:
         pygame.draw.rect(
@@ -265,7 +271,7 @@ class Game_loop:
         self.draw_game_board()
         self.draw_rows()
         
-        play = self.players[int(self.current_player)].get_move("alpha_prunning", self.board, self.human_time)
+        play = self.players[int(self.current_player)].get_move(self.algorithms, self.board, self.human_time)
         if play != None:
             self.falling_down_efect(play)
             self.falling_obj.draw(self.draw_game_board, self.draw_rows)
