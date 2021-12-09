@@ -30,6 +30,7 @@ python /snake/main.py
 - [Four in a row](https://github.com/robertocarlosmedina/games_collection/tree/main/for_in_a_row)
 - [2048](https://github.com/robertocarlosmedina/games_collection/tree/main/2048)
 - [Tic Tac Toe](https://github.com/robertocarlosmedina/games_collection/tree/main/Tic_Tac_Toe)
+- [Tic Tac Toe](https://github.com/robertocarlosmedina/games_collection/tree/main/hanoi_tower)
 
 ## AI Algorithms used
 
