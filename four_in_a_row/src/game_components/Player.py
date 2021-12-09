@@ -1,6 +1,6 @@
 import numpy as np
 
-class AIPlayer:
+class AI_player:
     def __init__(self, player_number):
         self.player_number = player_number
         self.type = 'ai'
@@ -319,7 +319,7 @@ class AIPlayer:
             return self.get_expectimax_move(board)
 
 
-class RandomPlayer:
+class Random_player:
     def __init__(self, player_number):
         self.player_number = player_number
         self.type = 'random'
@@ -350,7 +350,7 @@ class RandomPlayer:
         return np.random.choice(valid_cols)
 
 
-class HumanPlayer:
+class Human_player:
     def __init__(self, player_number):
         self.player_number = player_number
         self.type = 'human'

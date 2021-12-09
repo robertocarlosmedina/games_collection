@@ -18,7 +18,7 @@ import numpy as np
 from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
 from src.game_components.faling_object import Falling_object
-from src.game_components.Player import AIPlayer, RandomPlayer, HumanPlayer
+from src.game_components.Player import AI_player, Random_player, Human_player
 from src.support.auxiliar_functions import write_from_file
 
 def turn_worker(board, send_end, p_func):
@@ -70,18 +70,17 @@ class Game_loop:
 
     def initializing_game_mode(self, game_mode: str) -> None:
         if game_mode == "human_player": 
-             self.players = [HumanPlayer(1), HumanPlayer(2)]
+             self.players = [Human_player(1), Human_player(2)]
         elif game_mode == "random_player":
-            self.players = [HumanPlayer(1), RandomPlayer(2)]
+            self.players = [Human_player(1), Random_player(2)]
         elif game_mode == "ai_player":
-            self.players = [HumanPlayer(1), AIPlayer(2)]
+            self.players = [Human_player(1), AI_player(2)]
         else:
-            self.players = [AIPlayer(1), AIPlayer(2)]
+            self.players = [AI_player(1), AI_player(2)]
             if game_mode == "ai_vs_ai_exp":
                 self.algorithms = "expectimax"
             else:
                 self.algorithms = "alpha_prunning"
-
 
     def draw_game_board(self) -> None:
         pygame.draw.rect(
