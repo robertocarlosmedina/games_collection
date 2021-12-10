@@ -40,7 +40,7 @@ class Game_mode:
             "random_player":"Random player",
             "ai_player":"AI player",
             "ai_vs_ai_exp": "AI vs AI (Exp)",
-            "ai_vs_ai_exap": "AI vs AI (Exp Ah Pr)"
+            "ai_vs_ai_exap": "AI vs AI (Alph Pr)"
         }
         self.buttons_size = {
             "x":220,

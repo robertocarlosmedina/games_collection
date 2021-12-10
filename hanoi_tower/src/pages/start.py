@@ -27,7 +27,7 @@ class Game_start:
     def draw_screen_text(self) -> None:
         # drawing tittle
         size = pygame.font.Font.size(font.montserrat_size_50.value, get_screen_text("game_tittle"))
-        line = font.montserrat_size_50.value.render(get_screen_text("game_tittle"), True, color.red_2.value)
+        line = font.montserrat_size_50.value.render(get_screen_text("game_tittle"), True, color.brown.value)
         self.game_object.screen.blit(line, (self.game_object.screen_size[0]/2 - size[0]/2, (self.game_object.screen_size[1]/2 - size[1]/2) - 40))
         # drawing sub tittle
         size = pygame.font.Font.size(font.montserrat_size_12.value, get_screen_text("game_subtittle"))

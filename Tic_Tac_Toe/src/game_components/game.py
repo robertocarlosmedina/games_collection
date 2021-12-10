@@ -158,7 +158,7 @@ class Game_loop:
         self.get_player_move()
 
         if self.ttt.verificaGanhador():
-            sleep(2)
+            sleep(1)
             return self.game_over(self.ttt.verificaGanhador())
         
         return "game_loop"

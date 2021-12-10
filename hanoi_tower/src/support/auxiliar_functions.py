@@ -29,7 +29,7 @@ screen_texts = {
 def draw_header_styled_lines(screen :pygame.Surface, screen_size :tuple) -> None:
     pygame.draw.line(
         screen, 
-        color.blue.value,
+        color.brown.value,
         (screen_size[0]/2 - 190, 100), 
         (screen_size[0]/2 + 190, 100), 
         3

@@ -74,7 +74,8 @@ class Game_loop:
         elif game_mode == "random_player":
             self.players = [Human_player(1), Random_player(2)]
         elif game_mode == "ai_player":
-            self.players = [Human_player(1), AI_player(2)]
+            self.algorithms = "alpha_prunning"
+            self.players = [AI_player(2), Human_player(1)]
         else:
             self.players = [AI_player(1), AI_player(2)]
             if game_mode == "ai_vs_ai_exp":

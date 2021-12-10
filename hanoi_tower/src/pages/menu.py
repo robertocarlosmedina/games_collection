@@ -52,10 +52,10 @@ class Game_menu:
     
     def page_tittles(self) -> None:
         font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, get_screen_text("game_tittle"))
-        line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.red_2.value)
+        line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.white.value)
         self.game_obj.screen.blit(line, (self.game_obj.screen_size[0]/2-(font_size[0]/2), 25))
-        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_main_menu_text"))
-        line = fonts.montserrat_size_22.value.render(get_screen_text("game_main_menu_text"), True, color.white_1.value)
+        font_size = pygame.font.Font.size(fonts.montserrat_size_20.value, get_screen_text("game_main_menu_text"))
+        line = fonts.montserrat_size_20.value.render(get_screen_text("game_main_menu_text"), True, color.white_1.value)
         self.game_obj.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),

@@ -35,7 +35,7 @@ class Game_over:
         self.y_pos = 225
         self.game_data = read_from_file("data/end_game_values.txt", "r", True)[0].split(" ")
         self.game_buttons = {
-            "game_loop": "New Game",
+            "game_chose_mode": "New Game",
             "game_menu": "Main Menu",
             "game_quit":"Quit"
         }

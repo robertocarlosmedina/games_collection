@@ -15,7 +15,7 @@ from src.support.colors import Game_color as color
 def verticalButtonsDisplay(screen :pygame.Surface, buttons :list, start_position :dict, 
         box_dim :dict, mouse_pos :list, font :pygame.font, button_clicked :str, border = 10, 
         select_color = color.green.value, hover_color = color.grey.value, 
-        button_color = color.blue.value, fill_box = 2, text_color = color.blue.value,
+        button_color = color.brown.value, fill_box = 2, text_color = color.brown.value,
         hover_text_color = color.white.value, select_text_color = color.black.value) -> str:
 
     for button in buttons:
@@ -56,7 +56,7 @@ def verticalButtonsDisplay(screen :pygame.Surface, buttons :list, start_position
 def horizontalButtonDisplay(screen :pygame.Surface, buttons :list, start_position :dict, 
         box_dim :dict, mouse_pos :list, font :pygame.font, button_clicked :str, border = 10, 
         select_color = color.green.value, hover_color = color.grey.value, 
-        button_color = color.blue.value, fill_box = 2, text_color = color.blue.value,
+        button_color = color.brown.value, fill_box = 2, text_color = color.brown.value,
         hover_text_color = color.white.value, select_text_color = color.black.value) -> str:
 
     for button in buttons:
