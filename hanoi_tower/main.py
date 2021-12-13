@@ -41,7 +41,7 @@ class Game:
         self.screen = pygame.display.set_mode(self.screen_size)
         pygame.display.set_caption(get_screen_text("game_tittle"))
         self.game_events = None
-        self.current_link = "game_menu"
+        self.current_link = "game_start"
         self.game_mode = None
         self.nr_disk = 3
         self.clock = pygame.time.Clock()
