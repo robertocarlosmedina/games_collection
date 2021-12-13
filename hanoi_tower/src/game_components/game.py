@@ -16,6 +16,7 @@ from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
 from src.support.auxiliar_functions import write_from_file, get_screen_text
 from src.game_components.disk import Disk
+from src.game_components.selfplay import AI_play
 
 class Game_loop:
     
@@ -24,29 +25,37 @@ class Game_loop:
     
     def __init__(self, game_obj: object) -> None:
         self.game_obj = game_obj
-        self.board_size = (400, 20)
+        self.board_size = (600, 20)
+        self.n = self.game_obj.nr_disk
         self.disk_scale = 25
         self.disk_higth = 20
-        self.pegs_gaps = 120
+        self.pegs_gaps = 200
         self.selector_pos = 0
         self.play_pos = None
         self.moves = 0
         self.pekers_arrows = []
+        self.list_moves = []
         self.play_arrows = []
         self.peg_position = (
-            self.game_obj.screen_size[0]/2 - self.board_size[0]/2 + self.pegs_gaps/1.6, 
+            self.game_obj.screen_size[0]/2 - self.board_size[0]/2 + self.pegs_gaps/2.1, 
             self.game_obj.screen_size[1]/2 - self.board_size[1]/2 + 50
         )
         
-        self.peg_and_disk = [{1, 2, 3, 4}, set(), set()]
+        self.peg_and_disk = [set([i+1 for i in range(self.n)]), set(), set()]
         self.time_1 = time.time()
         self.make_selector_arrows()
         self.make_play_arrows()
+        self.game_mode_check()
     
     def page_tittles(self) -> None:
         font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, get_screen_text("game_tittle"))
         line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.brown.value)
         self.game_obj.screen.blit(line, (self.game_obj.screen_size[0]/2-(font_size[0]/2), 20))
+
+    def game_mode_check(self) -> None:
+        if (self.game_obj.game_mode == "game_ai_play"):
+            ai_moves = AI_play(self.n)
+            self.list_moves = ai_moves.get_all_moves()
 
     def make_selector_arrows(self) -> None:
         x = int(self.peg_position[0]) - 10
@@ -54,15 +63,15 @@ class Game_loop:
         for _ in range(3):
             self.pekers_arrows.append(((x, y - 20), \
                 (x + 15, y - 30), (x + 30, y - 20)))
-            x += 120
+            x += self.pegs_gaps
     
     def make_play_arrows(self) -> None:
         x = int(self.peg_position[0]) - 10
-        y = int(self.peg_position[1]) - 120
+        y = int(self.peg_position[1]) - 180
         for _ in range(3):
             self.play_arrows.append(((x, y - 20), \
                 (x + 15, y - 10), (x + 30, y - 20)))
-            x += 120
+            x += self.pegs_gaps
     
     def selector(self) -> int:
         count = 0
@@ -146,12 +155,12 @@ class Game_loop:
             self.game_obj.screen, 
             color.grey.value, pygame.Rect(
                 x, 
-                self.game_obj.screen_size[1]/2 - self.board_size[1]/2 - 35, 
+                self.game_obj.screen_size[1]/2 - self.board_size[1]/2 - 75, 
                 12, 
-                130), 
+                170), 
                 border_radius = 10
             ) 
-            x += 120
+            x += self.pegs_gaps
 
         pygame.draw.rect(
             self.game_obj.screen, 
@@ -208,7 +217,7 @@ class Game_loop:
                 )
                 y -= self.disk_higth + 1
             y = self.game_obj.screen_size[1]/2 - self.board_size[1]/2 + 69
-            x += 120
+            x += self.pegs_gaps
 
     def draw_game_info(self) -> None:
         font_size = pygame.font.Font.size(fonts.montserrat_size_18.value, f"Moves: {self.moves}")
@@ -229,12 +238,14 @@ class Game_loop:
         line = fonts.montserrat_size_14.value.render('Press  "e"  to exit selector mode', True, color.red.value)
         self.game_obj.screen.blit(line, (self.game_obj.screen_size[0]/2-(font_size[0]/2), 470))
 
+    def check_game_over(self) -> bool:
+        return self.peg_and_disk == [set(), set(), set([i + 1 for i in range(self.n)])]
+
     def run_link(self) -> None:
         change_page_by_action = change_page_by_event = False
 
         while True:
             self.game_obj.screen_fill_bg()
-
             self.mouse_position = pygame.mouse.get_pos()
 
             self.page_tittles()
@@ -244,9 +255,16 @@ class Game_loop:
             change_page_by_event = self.game_obj.game_events_handler()
             self.draw_board()
             self.draw_disks()
-            self.selector() if not self.selector_pos else self.make_play()
+            if(self.game_obj.game_mode == "game_ai_play"):
+                for change in self.list_moves:
+                    self.selector_pos = change[0] + 1
+                    if not self.check_game_over:
+                        break
+                    self.change_disk_position(change[1])
+            else:
+                self.selector() if not self.selector_pos else self.make_play()
 
-            if self.peg_and_disk == [set(), set(), {1, 2, 3, 4}]:
+            if not self.check_game_over:
                 change_page_by_action = True
                 self.game_over(True)
             

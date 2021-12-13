@@ -15,6 +15,8 @@ from src.pages.start import Game_start
 from src.pages.menu import Game_menu
 from src.pages.quit import Game_quit
 from src.pages.credits import Game_Credits
+from src.pages.game_mode import Game_Mode
+from src.pages.menu_nr_disk import Game_NR_Disk
 
 
 class Game_links:
@@ -57,6 +59,14 @@ class Game_links:
 
     def game_pause_menu(self, game_obj: object) -> None:
         self.game_page_object = Game_Pause_Menu(game_obj)
+        self.game_page_object.run_link()
+    
+    def game_mode_choice(self, game_obj: object) -> None:
+        self.game_page_object = Game_Mode(game_obj)
+        self.game_page_object.run_link()
+    
+    def game_nr_disk(self, game_obj: object) -> None:
+        self.game_page_object = Game_NR_Disk(game_obj)
         self.game_page_object.run_link()
 
     def game_over(self, game_obj: object) -> None:
