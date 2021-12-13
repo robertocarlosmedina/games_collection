@@ -6,6 +6,7 @@ __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
 """
+    Class the Handle toe player decition to leave the game.
 """
 
 import pygame

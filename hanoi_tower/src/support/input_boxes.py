@@ -1,4 +1,9 @@
-
+__author__ = "Roberto Medina"
+__copyright__ = "Copyright 2021, Roberto Carlos Medina"
+__version__ = "0.0.1"
+__maintainer__ = "Roberto Medina"
+__email__ = "robertocarlosmedina.dev@gmail.com "
+__status__ = "Production"
 
 import pygame
 from src.support.colors import Game_color as color

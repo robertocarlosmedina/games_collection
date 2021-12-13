@@ -22,6 +22,9 @@ HEIGHT = 500
 
 game_links: dict            # To store all the links an possible page to go on the game
 
+"""
+    This class stores the game configurations and links.
+"""
 class Game:
 
     pygame.init()

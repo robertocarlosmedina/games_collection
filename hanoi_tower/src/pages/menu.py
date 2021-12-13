@@ -8,7 +8,6 @@ __status__ = "Production"
 """
     This is the main menu class. This class controls all the navegation that
     can be done on the game.
-
 """
 
 import pygame

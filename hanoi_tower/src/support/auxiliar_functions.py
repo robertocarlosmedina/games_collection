@@ -2,16 +2,18 @@ import pygame
 from src.support.colors import Game_color as color
 from src.support.font import Game_fonts as fonts
 
-file :object
-file_data :str
-surface :pygame.Surface
-screen_texts :dict
+file :object                 # Store the file object to be open
+file_data :str               # Store the file content's
+surface :pygame.Surface      # Surface to bee use in the information display
+screen_texts :dict           # Dict of all the display text of the game
 
 surface = pygame.Surface((100, 100))
 screen_texts = {
     "game_tittle": " Tower of Hanoi",
     "game_subtittle": "Case study",
     "game_main_menu_text": "Game Menu",
+    "game_mode_menu": "Chose game mode",
+    "game_tower_disk_nr": "Chose the number of disk",
     "self_play_menu_text": "Play game",
     "game_result_text": "Game Over",
     "game_lost_text": "You lose!",
@@ -27,6 +29,9 @@ screen_texts = {
 
 
 def draw_header_styled_lines(screen :pygame.Surface, screen_size :tuple) -> None:
+    """
+        Draw the styled line on top of the menus pages.
+    """
     pygame.draw.line(
         screen, 
         color.brown.value,
@@ -49,6 +54,9 @@ def draw_header_styled_lines(screen :pygame.Surface, screen_size :tuple) -> None
     )
 
 def draw_vertical_styled_lines(screen :pygame.Surface, screen_size :tuple) -> None:
+    """
+        Draw a vertical line on the middle of the screen.
+    """
     pygame.draw.line(
         screen, 
         color.green.value,
@@ -72,6 +80,9 @@ def draw_vertical_styled_lines(screen :pygame.Surface, screen_size :tuple) -> No
     )
 
 def display_game_result_info(screen :pygame.Surface, info_name :str, value :int, position :dict) -> None:
+    """
+        Display a surface whit the game result.
+    """
     font_size :int
     surface.fill(color.black.value)
     pygame.draw.rect(
@@ -106,6 +117,9 @@ def display_game_result_winning_color_info(screen :pygame.Surface, info_name :st
     screen.blit(surface, (position["x"], position["y"]))
 
 def read_from_file(file_path :str, mode :str, clean_data = False) -> list:
+    """
+        function the read data from a txt file.
+    """
     file = open(file_path, mode)
     file_data = file.readlines()
     file.close()
@@ -117,9 +131,15 @@ def read_from_file(file_path :str, mode :str, clean_data = False) -> list:
     return file_data
 
 def write_from_file(file_path :str, mode :str, value :str) -> None:
+    """
+        Function to write on a txt file.
+    """
     file = open(file_path, mode)
     file.write(value)
     file.close()
 
 def get_screen_text(text_name :str):
+    """
+        Getting a screen text according the his id.
+    """
     return screen_texts[text_name]

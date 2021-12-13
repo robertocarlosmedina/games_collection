@@ -6,6 +6,7 @@ __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
 """
+    Thi is the manu of the number of disk the player wants to play.
 """
 
 import pygame
@@ -47,6 +48,9 @@ class Game_NR_Disk:
         }
 
     def on_press_delay_control(self) -> bool:
+        """
+            This make's the delay on pressing the buttons while entering on this page.
+        """
         if self.delay > 10:
             return False
 
@@ -54,12 +58,15 @@ class Game_NR_Disk:
         return True
     
     def page_tittles(self) -> None:
+        """
+            Draw the pages headers on the top.
+        """
         font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, get_screen_text("game_tittle"))
         line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.white.value)
         self.game_object.screen.blit(line, (self.game_object.screen_size[0]/2-(font_size[0]/2), 25))
 
-        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("pause_menu_title"))
-        line = fonts.montserrat_size_22.value.render(get_screen_text("pause_menu_title"), True, color.green_1.value)
+        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_tower_disk_nr"))
+        line = fonts.montserrat_size_22.value.render(get_screen_text("game_tower_disk_nr"), True, color.green_1.value)
         self.game_object.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
@@ -67,6 +74,9 @@ class Game_NR_Disk:
         )
    
     def pause_menu_buttons(self) -> None:
+        """
+            Draw this page buttons.
+        """
         self.button_clicked = verticalButtonsDisplay(
             screen = self.game_object.screen,
             buttons = self.game_buttons.values(),
@@ -81,6 +91,9 @@ class Game_NR_Disk:
         )
 
     def run_link(self) -> str:
+        """
+            Main loop of this pages.
+        """
         change_page_by_event = change_page_by_event = False
 
         while True:

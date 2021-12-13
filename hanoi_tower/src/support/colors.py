@@ -6,6 +6,7 @@ __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
 """
+    All the available color's that can be used on the game.
 """
 
 from enum import Enum

@@ -5,8 +5,7 @@ __maintainer__ = "Roberto Medina"
 __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
-"""
-"""
+
 
 from src.pages.pause_menu import Game_Pause_Menu
 from src.pages.game_over import Game_over
@@ -18,6 +17,9 @@ from src.pages.credits import Game_Credits
 from src.pages.game_mode import Game_Mode
 from src.pages.menu_nr_disk import Game_NR_Disk
 
+"""
+    All the links of the game declaration by method's.
+"""
 
 class Game_links:
 

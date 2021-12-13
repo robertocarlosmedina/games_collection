@@ -6,6 +6,7 @@ __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
 """
+    Class that shows the credits page.
 """
 
 import pygame
@@ -17,12 +18,11 @@ from src.support.auxiliar_functions import draw_header_styled_lines, get_screen_
 
 class Game_Credits:
 
-    game_buttons :list
-    button_clicked :str
-    mouse_position :tuple
-    menu_tittles :dict
-    menus_start_positions :dict
-    buttons_size :dict
+    game_buttons :list                # List of name of the button's
+    button_clicked :str               # Store the name of the button clicked
+    mouse_position :tuple             # Store the mouse positon 
+    menus_start_positions :dict       # Start position of the buttons
+    buttons_size :dict                # Sizes of the button
 
     def __init__(self, game_obj) -> None:
         self.game_obj = game_obj

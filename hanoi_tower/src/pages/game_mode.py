@@ -6,6 +6,7 @@ __email__ = "robertocarlosmedina.dev@gmail.com "
 __status__ = "Production"
 
 """
+    Class to draw the game mode menu of the game.
 """
 
 import pygame
@@ -20,7 +21,6 @@ class Game_Mode:
     game_buttons :list
     button_clicked :str
     mouse_position :tuple
-    menu_tittles :dict
     menus_start_positions :dict
     buttons_size :dict
 
@@ -55,8 +55,8 @@ class Game_Mode:
         line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.white.value)
         self.game_object.screen.blit(line, (self.game_object.screen_size[0]/2-(font_size[0]/2), 25))
 
-        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("pause_menu_title"))
-        line = fonts.montserrat_size_22.value.render(get_screen_text("pause_menu_title"), True, color.green_1.value)
+        font_size = pygame.font.Font.size(fonts.montserrat_size_22.value, get_screen_text("game_mode_menu"))
+        line = fonts.montserrat_size_22.value.render(get_screen_text("game_mode_menu"), True, color.green_1.value)
         self.game_object.screen.blit(
             line, 
             (self.menus_start_positions["game_menu"]["x"]-(font_size[0]/2)+(self.buttons_size["x"]/2),
@@ -78,6 +78,9 @@ class Game_Mode:
         )
 
     def run_link(self) -> str:
+        """
+            Main loop of this page.
+        """
         change_page_by_event = change_page_by_event = False
 
         while True:

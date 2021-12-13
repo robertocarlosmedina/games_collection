@@ -16,12 +16,24 @@ from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
 from src.support.auxiliar_functions import write_from_file, get_screen_text
 from src.game_components.disk import Disk
-from src.game_components.selfplay import AI_play
+from src.self_play.selfplay import AI_play
 
 class Game_loop:
     
     game_events: pygame.event        # Hold the current games events
     mouse_position: tuple            # To store and refresh the mouse position
+    disk_higth: int                  # the value of the disk height
+    disk_scale: int                  # Scale to help drawing the disk's
+    pegs_gaps: int                   # distance between the pegs
+    board_size: tuple                # Hanoi board info (size's)
+    n: int                           # number of disk's
+    selector_pos: int                # Store the value selected by the selector's
+    list_moves: list                 # store all the moves made by the AI agent
+    pekers_arrows: list              # Store all the selector arrow peker's position
+    play_arrows: list                # Store all the player move arrow's position
+    peg_position: tuple              # store the first peg positon
+    peg_and_disk: list               # Store a list of set's according the to number of peg's and disk's
+    timer_1: time.time               # Store the initial time
     
     def __init__(self, game_obj: object) -> None:
         self.game_obj = game_obj
@@ -40,7 +52,6 @@ class Game_loop:
             self.game_obj.screen_size[0]/2 - self.board_size[0]/2 + self.pegs_gaps/2.1, 
             self.game_obj.screen_size[1]/2 - self.board_size[1]/2 + 50
         )
-        
         self.peg_and_disk = [set([i+1 for i in range(self.n)]), set(), set()]
         self.time_1 = time.time()
         self.make_selector_arrows()
@@ -48,16 +59,26 @@ class Game_loop:
         self.game_mode_check()
     
     def page_tittles(self) -> None:
+        """
+            Draw the tittle header.
+        """
         font_size = pygame.font.Font.size(fonts.montserrat_size_30.value, get_screen_text("game_tittle"))
         line = fonts.montserrat_size_30.value.render(get_screen_text("game_tittle"), True, color.brown.value)
         self.game_obj.screen.blit(line, (self.game_obj.screen_size[0]/2-(font_size[0]/2), 20))
 
     def game_mode_check(self) -> None:
+        """
+            Method that check the game mode, and if it is an AI agent
+            it makes a list of the steps to complete the towers on the final goal test.
+        """
         if (self.game_obj.game_mode == "game_ai_play"):
             ai_moves = AI_play(self.n)
             self.list_moves = ai_moves.get_all_moves()
 
     def make_selector_arrows(self) -> None:
+        """
+            Method that make the calcum of the selector arrows
+        """
         x = int(self.peg_position[0]) - 10
         y = int(self.peg_position[1]) + 105
         for _ in range(3):
@@ -66,6 +87,9 @@ class Game_loop:
             x += self.pegs_gaps
     
     def make_play_arrows(self) -> None:
+        """
+            Method that make the calcum of the player arrows
+        """
         x = int(self.peg_position[0]) - 10
         y = int(self.peg_position[1]) - 180
         for _ in range(3):
@@ -74,6 +98,9 @@ class Game_loop:
             x += self.pegs_gaps
     
     def selector(self) -> int:
+        """
+            This allow's the player to chose in witch peg he wants to change.
+        """
         count = 0
         for index, arrow in enumerate(self.pekers_arrows):
             if self.peg_and_disk[index]:
@@ -94,13 +121,17 @@ class Game_loop:
             count += 1
     
     def change_disk_position(self, destination_place: int) -> None:
+        """
+            This make the move chosen by the agent and then call the animation
+            class to make the disk animation.
+        """
         move_value = list(self.peg_and_disk[self.selector_pos - 1])[0]
         self.peg_and_disk[self.selector_pos - 1].remove(move_value)
         new_animation = Disk(self.game_obj)
 
         new_animation.draw_disk_animation(
             self.pekers_arrows[destination_place][1],
-            self.game_obj.screen_size[1]/2 - self.board_size[1]/2 + 90 - \
+            self.game_obj.screen_size[1]/2 - self.board_size[1]/2 + 66 - \
                 len(list(self.peg_and_disk[destination_place])) * self.disk_higth + 2, 
             self.draw_board, 
             self.draw_disks,
@@ -113,6 +144,10 @@ class Game_loop:
         self.moves += 1
 
     def available_peg(self, peg_index: int) -> bool:
+        """
+            Check if the player can play in a peg that was a disk bigger than the 
+            one that the player wants to play.
+        """
         if not self.peg_and_disk[peg_index]:
             return True
         else:
@@ -122,6 +157,9 @@ class Game_loop:
         return False
 
     def make_play(self) -> None:
+        """
+            Method that control the playr move by the mouse.
+        """
         count = 0
         for index, arrow in enumerate(self.play_arrows):
             if index != self.selector_pos - 1 and self.available_peg(index):
@@ -143,12 +181,18 @@ class Game_loop:
             count += 1
 
     def game_over(self, game_result: bool) -> None:
+        """
+            Method to store the game results in a file and also change the current game link.
+        """
         time_2 = time.time()
         time_interval = time_2 - self.time_1
         write_from_file("./data/end_game_values.txt", "w", f"{int(game_result)} {self.moves} {str(time_interval)[0:5]}")
         self.game_obj.current_link = "game_over"
 
     def draw_board(self) -> None:
+        """
+            Method to draw the board on the screen.
+        """
         x = self.peg_position[0]
         for _ in self.peg_and_disk:
             pygame.draw.rect(
@@ -185,6 +229,9 @@ class Game_loop:
         )
         
     def draw_disks(self) -> None:
+        """
+            Method to draw all the disk according to their state.
+        """
         x = self.peg_position[0] + 6
         y = self.game_obj.screen_size[1]/2 - self.board_size[1]/2 + 69
         for index, disk_set in enumerate(self.peg_and_disk):
@@ -220,6 +267,9 @@ class Game_loop:
             x += self.pegs_gaps
 
     def draw_game_info(self) -> None:
+        """
+            Method to draw all the game info on the screen.
+        """
         font_size = pygame.font.Font.size(fonts.montserrat_size_18.value, f"Moves: {self.moves}")
         line = fonts.montserrat_size_18.value.render(f"Moves: {self.moves}", True, color.white.value)
         self.game_obj.screen.blit(line, (self.game_obj.screen_size[0]/2-(font_size[0]/2), 400))
@@ -238,10 +288,10 @@ class Game_loop:
         line = fonts.montserrat_size_14.value.render('Press  "e"  to exit selector mode', True, color.red.value)
         self.game_obj.screen.blit(line, (self.game_obj.screen_size[0]/2-(font_size[0]/2), 470))
 
-    def check_game_over(self) -> bool:
-        return self.peg_and_disk == [set(), set(), set([i + 1 for i in range(self.n)])]
-
     def run_link(self) -> None:
+        """
+            The main loop of the game page.
+        """
         change_page_by_action = change_page_by_event = False
 
         while True:
@@ -256,15 +306,19 @@ class Game_loop:
             self.draw_board()
             self.draw_disks()
             if(self.game_obj.game_mode == "game_ai_play"):
+                """
+                    If it is an AI player. Then if must make the change one by one that 
+                    has been already provided.
+                """
                 for change in self.list_moves:
                     self.selector_pos = change[0] + 1
-                    if not self.check_game_over:
+                    if self.peg_and_disk == [set(), set(), set([i + 1 for i in range(self.n)])]:
                         break
                     self.change_disk_position(change[1])
             else:
                 self.selector() if not self.selector_pos else self.make_play()
 
-            if not self.check_game_over:
+            if self.peg_and_disk == [set(), set(), set([i + 1 for i in range(self.n)])]:
                 change_page_by_action = True
                 self.game_over(True)
             
@@ -274,3 +328,4 @@ class Game_loop:
                 break
 
             pygame.display.update()
+        time.sleep(1)
