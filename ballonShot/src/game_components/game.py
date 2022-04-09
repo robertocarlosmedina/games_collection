@@ -12,6 +12,7 @@ __status__ = "Production"
 
 import time
 import pygame
+from random import randint
 from src.support.font import Game_fonts as fonts
 from src.support.colors import Game_color as color
 from src.support.auxiliar_functions import write_from_file, get_screen_text
@@ -33,14 +34,19 @@ class Game_loop:
     play_arrows: list                # Store all the player move arrow's position
     peg_position: tuple              # store the first peg positon
     peg_and_disk: list               # Store a list of set's according the to number of peg's and disk's
-    timer_1: time.time               # Store the initial time
+    time_1: time.time               # Store the initial time
+    general_time: time.time               # Store the initial time
     
     def __init__(self, game_obj: object) -> None:
         self.game_obj = game_obj
         self.n = self.game_obj.nr_disk
         self.play_pos = None
-        self.time_1 = time.time()
+        self.time_1 = self.general_time = time.time()
+        self.speed = 3
+        self.ballonList = []
         self.ballonShoted = 0
+        self.add_ballon_counter = 0
+        self.generate_new_ballons()
     
     def page_tittles(self) -> None:
         """
@@ -97,7 +103,12 @@ class Game_loop:
         """
             Method to Generate new Ballons
         """
-        pass
+        [self.ballonList.append(Ballon(self.game_obj, randint(self.speed-2, self.speed))) for _ in range(randint(5, 8))]
+    
+    def check_ballons_out_of_screen(self) -> None:
+        previuos_len = len(self.ballonList)
+        self.ballonList = [ballon for ballon in self.ballonList if ballon.get_position()[1] > -60]
+        self.add_ballon_counter += previuos_len - len(self.ballonList)
 
     def run_link(self) -> None:
         """
@@ -108,7 +119,12 @@ class Game_loop:
         while True:
             self.game_obj.screen_fill_bg()
             self.mouse_position = pygame.mouse.get_pos()
+            if time.time() - self.time_1 > 4:
+                self.generate_new_ballons()
+                self.time_1 = time.time()           
 
+            [ballon.draw_ballon() for ballon in self.ballonList]
+            self.check_ballons_out_of_screen()
             if pygame.key.get_pressed()[pygame.K_e]:
                 self.selector_pos = 0
 
